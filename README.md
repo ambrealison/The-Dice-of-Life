@@ -77,16 +77,20 @@ node validate.js
   Autriche, Niger conservés du seed). Pour dérouler un autre lot, ajuster la
   liste `TARGETS` de `collect.py` et relancer.
 - Niveaux 1, 2, 3, 4, 5, 8 en données nationales réelles (World Bank WDI — qui
-  redistribue WPP, WUP, UIS/Barro-Lee, JMP — et PIP pour le revenu). Pour le top
-  20, tout est national sauf 2 replis de scolarisation enfant (Chine, RD Congo).
-  Niveaux 6 (santé/GBD) et 7 (famille/marriage) : méthode figée et documentée,
-  repli marqué (sources primaires gated/bloquées, voir `COVERAGE_REPORT.md`).
-- **Reproductible** : `collect.py` relit le cache `data/raw/` par défaut
+  redistribue WPP, WUP, UIS/Barro-Lee, JMP — et PIP pour le revenu).
+- **Scripts de collecte** (chacun re-jouable, cache `data/raw/`) :
+  - `collect.py` — lots 1 & 2 (niveaux 1-5, 8) ;
+  - `collect_edu_age.py` — éducation par pays × âge × sexe (Barro-Lee/WDI) ;
+  - `collect_family.py` — calendrier matrimonial national via SMAM (WDI) ;
+  - `collect_mental.py` — prévalence trouble mental nationale (GBD, CSV fourni).
+- **Reproductible** : les scripts relisent le cache `data/raw/` par défaut
   (`REFRESH=1` force un nouveau téléchargement). Le test d'atteignabilité des
   sources est consigné dans `data/raw/_reachability_2026-07-21.md`.
-- **Méthodes figées** : `METHODS_health.md` (YLD GBD → 4 bandes de sévérité),
-  `METHODS_education.md` (base + facteurs), `METHODS_engine.md` (deux
-  généralisations de résolveur autorisées), couverture dans `COVERAGE_REPORT.md`.
+- **Méthodes figées & guides** : `METHODS_health.md` (YLD GBD → 4 bandes),
+  `METHODS_education.md` (base + facteurs + base âge×sexe), `METHODS_family.md`
+  (nuptialité SMAM), `METHODS_engine.md` (généralisations de résolveur),
+  `COVERAGE_REPORT.md` (couverture par table et par pays). Pour compléter la
+  santé et la famille nationales : `GBD_YLD_REQUEST.md` et `UN_MARRIAGE_REQUEST.md`.
 - **Revenu** : `data/income_world_ref.json` est la distribution mondiale de
   référence (déciles PIP de 40 pays pondérés par population) qui convertit un
   quintile national en percentile mondial.
