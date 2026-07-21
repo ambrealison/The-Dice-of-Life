@@ -1,0 +1,5 @@
+GBD Results Tool (vizhub.healthdata.org/gbd-results) — export fourni par l'utilisateur.
+Requête A (santé mentale) : Measure=Prevalence · Metric=Percent · Year=2021 ·
+Causes=Mental disorders (558) + Substance use disorders (973) · Sex=Male,Female ·
+Age=groupes 5 ans (<5 … 95+) · Location=23 pays du domaine.
+Citation : GBD 2023, IHME 2024. Voir gbd_mental_2021.citation.txt.

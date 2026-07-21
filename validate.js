@@ -76,6 +76,15 @@ DOMAIN.forEach(iso => { if (need(he.country_group, iso, "health.country_group"))
 if (!he.age_factors || he.age_factors.boost.length !== 8 || he.age_factors.good.length !== 8) err("health.age_factors: boost/good doivent avoir 8 valeurs");
 if (!Array.isArray(he.income_penalty) || he.income_penalty.length !== 5) err("health.income_penalty: 5 valeurs");
 if (!he.mental || he.mental.base === undefined) err("health.mental.base manquant");
+// prévalence trouble mental nationale optionnelle : valeurs dans [0,1]
+if (he.mental_prevalence) {
+  for (const iso in he.mental_prevalence) {
+    if (!DOMAIN.includes(iso)) warns.push(`health.mental_prevalence: ${iso} hors domaine`);
+    for (const age in he.mental_prevalence[iso])
+      for (const sex in he.mental_prevalence[iso][age])
+        if (!inRange(he.mental_prevalence[iso][age][sex], 0, 1)) err(`health.mental_prevalence ${iso}/${age}/${sex} hors [0,1]`);
+  }
+}
 
 // family
 const fa = load("family");

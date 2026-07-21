@@ -271,8 +271,15 @@ const STRATA=[
   distribution:st=>{const H=DATA.health;let w={...H.severity_base_group[H.country_group[st.country]]};
     const i=st.ageIdx,ab=H.age_factors.boost[i],ga=H.age_factors.good[i],li=H.income_penalty[st.qi];
     w.bonne*=ga;w.incap_moderee*=ab*li;w.incap_severe*=ab*li;w.gene_legere*=(0.9+0.05*i);return w;},
-  reveal:(o,st)=>{const H=DATA.health,m=H.mental;
-    const mp=clamp(m.base+(st.rural?m.rural_add:0)+(st.qi<=1?m.lowinc_add:0),m.min,m.max);st.mental=Math.random()<mp;
+  reveal:(o,st)=>{const H=DATA.health;
+    // prévalence trouble mental : nationale par pays × âge × sexe (GBD) si dispo,
+    // sinon modèle global de repli. Aucun chiffre pays dans le code.
+    let mp;const MP=H.mental_prevalence;
+    if(MP&&MP[st.country]&&MP[st.country][st.ageId]&&MP[st.country][st.ageId][st.sex]!=null){
+      mp=MP[st.country][st.ageId][st.sex];
+    }else if(H.mental){const m=H.mental;mp=clamp(m.base+(st.rural?m.rural_add:0)+(st.qi<=1?m.lowinc_add:0),m.min,m.max);}
+    else{mp=0.1;}
+    st.mental=Math.random()<mp;
     return{word:T().sante_word[o],cap:o==="bonne"?T().sante_cap_bonne:"",chip:[T().cat.sante,T().sante_word[o]]};},
   apply:(o,st)=>{st.health=o;}},
 

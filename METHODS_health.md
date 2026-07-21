@@ -44,12 +44,21 @@ Procédure figée, par cellule pays × âge × sexe :
 > ce n'est pas une variable prête à l'emploi. La correction de comorbidité évite
 > de surcompter les personnes polymorbides.
 
-## 3. Santé mentale (`mental`)
+## 3. Santé mentale (`mental`) — ✅ NATIONALE (intégrée)
 
 Prévalence d'**au moins un trouble mental ou addictif** par pays × âge × sexe,
-directement depuis la prévalence GBD des troubles mentaux et addictifs (union des
-causes de ce chapitre, combinée par `1 − Π(1 − p_i)` pour éviter le double compte).
+combinée depuis la prévalence GBD des troubles mentaux (cause 558) et addictifs
+(cause 973) par `1 − (1 − p_mental)(1 − p_substance)` pour éviter le double compte.
 Dignité : on ne nomme jamais une pathologie, on décrit un niveau de limitation.
+
+**Statut : intégrée** (GBD 2023, requête A fournie 2026-07-21). Brut en cache
+`data/raw/gbd_mental_2021.csv`. Agrégation des groupes 5 ans du GBD vers les 8
+buckets, pondérée population (WDI). Écrit `health.mental_prevalence[iso][âge][sexe]`,
+coverage **national**, 23/23 pays. Repli : ancien modèle global `health.mental`
+si une case manque. Voir `collect_mental.py`.
+
+Effet (P(trouble mental), avant modèle global → après GBD national) :
+USA 20-34 F **11 % → 31 %** ; Inde 20-34 F 11 % → 17 % ; Japon 35-49 H 11 % → 15 %.
 
 ## 4. Gradient de revenu (`income_penalty`)
 
@@ -70,21 +79,22 @@ distribution pays × âge × sexe (tolérance 1e-6).
 
 ## État d'accès (2026-07-21) et repli honnête
 
-Le test d'atteignabilité (`data/raw/_reachability_2026-07-21.md`) montre que
-`vizhub.healthdata.org/gbd-results/` répond, mais l'**extraction fine des
-séquelles avec leurs disability weights par pays × âge × sexe** passe par l'outil
-de résultats GBD, qui exige un compte GHDx pour les téléchargements en masse —
-non disponible dans cet environnement. Conformément à la règle « ne jamais
-inventer une valeur », le fichier `data/health.json` conserve pour l'instant le
-**modèle groupé documenté** :
+Avancement en deux temps :
 
-- `severity_base_group` par palier de revenu (`rich`/`mid`/`low`), cohérent avec
-  les seuils ci-dessus et les ordres de grandeur GBD ;
-- `age_factors` (dégradation avec l'âge), `income_penalty` (§4), `mental` (§3).
+1. **Santé mentale (requête A) : intégrée en national** (§3). L'export GBD de
+   prévalence des troubles mentaux/addictifs a été fourni et branché
+   (`mental_prevalence`, coverage `national`, 23/23 pays).
+2. **Sévérité physique (4 bandes, requête B YLDs) : encore en modèle groupé.**
+   L'export fin (YLDs / séquelles × disability weights par pays × âge × sexe) est
+   bloqué au téléchargement direct par le portail GBD (volume trop gros → demande
+   groupée requise). En attendant, `data/health.json` conserve le **modèle groupé
+   documenté** pour les 4 bandes physiques :
+   - `severity_base_group` par palier de revenu (`rich`/`mid`/`low`) ;
+   - `age_factors` (dégradation avec l'âge), `income_penalty` (§4).
 
-Ce modèle groupé vaut **coverage `income_group`** (pas `national`) : c'est une
-estimation honnête par palier, pas un chiffre national inventé. La méthode
-ci-dessus (§1–§5) est **figée** et prête à produire `severity_base[iso][age][sex]`
-en coverage `national` dès que l'export GBD (GHDx) est fourni ; le résolveur
-`sante` du moteur pourra alors lire une base par pays × âge × sexe (voir
-`METHODS_engine.md`, généralisation prévue mais non requise pour le lot 1).
+Le modèle groupé physique vaut **coverage `income_group`** (pas `national`) :
+estimation honnête par palier, pas un chiffre inventé. La méthode §1–§5 est
+**figée** et prête à produire `severity_base[iso][age][sex]` en national dès que
+le fichier YLDs de la demande groupée arrive — voir `GBD_YLD_REQUEST.md` pour la
+marche à suivre exacte. Le résolveur `sante` lira alors une base par pays × âge ×
+sexe (généralisation moteur, `METHODS_engine.md`).

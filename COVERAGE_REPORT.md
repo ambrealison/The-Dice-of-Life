@@ -22,7 +22,8 @@ mondial), marquée en conséquence.
 | education (5) — base **par âge × sexe** | 21/23 | NGA, ETH → repli base pays | Barro-Lee par âge (WDI EdStats) |
 | education (5) — scolarisation enfant | 18 | **CHN** régional, **COD** income_group | WDI `SE.PRM.UNER.ZS` (repli `SE.PRM.NENR`) |
 | living (8) — électricité/internet/eau | 20 | — | WDI `EG.ELC.ACCS.ZS`, `IT.NET.USER.ZS`, `SH.H2O.*` (wdi/jmp) |
-| health (6) — sévérité + mental | — | **20 × income_group** | modèle groupé GBD (`METHODS_health.md`) |
+| health (6) — trouble mental | **23 (GBD)** | — | GBD 2023 prévalence mentale+addictive (national) |
+| health (6) — sévérité physique (4 bandes) | — | 23 × income_group | modèle groupé (YLDs à venir, `GBD_YLD_REQUEST.md`) |
 | family (7) — célibataire ↔ couple | **23 (SMAM)** | — | WDI `SP.DYN.SMAM.FE/MA` + modèle nuptialité |
 | family (7) — veuvage / parentalité | — | regional/world | modèle documenté (`METHODS_family.md`) |
 
