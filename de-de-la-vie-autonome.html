@@ -355,7 +355,7 @@ const I18N = {
     milieu_chip: {grande:"Grande ville", ville:"Ville", rural:"Campagne"},
     /* revenu */
     revenu_word: ["Serré","Modeste","Au milieu","Confortable","Peinard"],
-    revenu_cap: top => "soit le top " + top + " % mondial, à peu près",
+    revenu_cap: pct => "plus riche que " + pct + " % du monde",
     /* éducation */
     edu_word: {petite:"Trop petit pour l'école", ecole:"À l'école", hors:"Pas scolarisé",
       aucune:"Pas allé à l'école", primaire:"Niveau primaire", secondaire:"Niveau lycée", superieur:"Études supérieures"},
@@ -430,7 +430,7 @@ const I18N = {
     milieu_cap: {grande:"lights and concrete", ville:"easy, mid-sized", rural:"fresh air, far from the noise"},
     milieu_chip: {grande:"Big city", ville:"Town", rural:"Countryside"},
     revenu_word: ["Tight","Modest","Middle","Comfortable","Cushy"],
-    revenu_cap: top => "roughly the global top " + top + "%",
+    revenu_cap: pct => "richer than " + pct + "% of the world",
     edu_word: {petite:"Too young for school", ecole:"In school", hors:"Out of school",
       aucune:"Never went to school", primaire:"Primary level", secondaire:"Secondary level", superieur:"Higher education"},
     edu_cap: {superieur:"degree in hand", secondaire:"diploma in sight", ecole:"backpack on"},
@@ -517,8 +517,10 @@ const STRATA=[
   distribution:()=>({q1:.2,q2:.2,q3:.2,q4:.2,q5:.2}),
   reveal:(o,st)=>{const qi=["q1","q2","q3","q4","q5"].indexOf(o);
     const lbl=T().revenu_word[qi];
-    const top=100-DATA.income.data[st.country].global_percentile[qi];
-    return{word:lbl,cap:T().revenu_cap(top),chip:[T().cat.revenu,lbl]};},
+    // percentile mondial réel du quintile : un pauvre -> petit %, un riche -> grand %.
+    // borné 1..99 pour éviter "0 %" / "100 %" aux extrêmes.
+    const pct=clamp(DATA.income.data[st.country].global_percentile[qi],1,99);
+    return{word:lbl,cap:T().revenu_cap(pct),chip:[T().cat.revenu,lbl]};},
   apply:(o,st)=>{st.qi=["q1","q2","q3","q4","q5"].indexOf(o);}},
 
  {id:"education",source_ref:()=>DATA.education.source_id,
