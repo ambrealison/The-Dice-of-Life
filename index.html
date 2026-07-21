@@ -169,6 +169,15 @@
 
   .confetti{position:absolute;width:12px;height:12px;z-index:20;pointer-events:none;border:2px solid var(--ink)}
 
+  /* ---------- SÉLECTEUR DE LANGUE ---------- */
+  .lang-switch{position:fixed;bottom:clamp(12px,2.6vw,20px);right:clamp(12px,2.6vw,20px);z-index:25;display:flex;
+    background:var(--cream);border:3px solid var(--ink);border-radius:999px;box-shadow:var(--shadow-sm);overflow:hidden}
+  .lang-btn{font-family:var(--disp);font-weight:800;font-size:13px;color:var(--ink);background:none;border:none;
+    padding:7px 14px;cursor:pointer;line-height:1;transition:background .15s ease,color .15s ease}
+  .lang-btn:hover{background:rgba(23,21,31,.08)}
+  .lang-btn.on{background:var(--ink);color:var(--cream)}
+  @media (max-width:560px){ .lang-switch{bottom:auto;top:clamp(12px,2.6vw,20px);right:50%;transform:translateX(50%)} }
+
   @keyframes wobble{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(2deg) translateY(-4px)}}
   @keyframes roll{0%{transform:rotate(0)}25%{transform:rotate(-14deg) scale(1.06)}50%{transform:rotate(16deg) scale(.96)}75%{transform:rotate(-8deg)}100%{transform:rotate(0)}}
   @keyframes pop{to{opacity:1;transform:scale(1)}}
@@ -183,9 +192,9 @@
 
   <!-- INTRO -->
   <section class="screen active" id="s-intro">
-    <div class="kicker">un jeu de hasard grandeur nature</div>
-    <h1 class="logo">Le Dé<br>de la Vie</h1>
-    <div class="tagline">8 milliards de vies. Le dé en tire une au sort. Ça aurait pu être la tienne.</div>
+    <div class="kicker" data-i18n="kicker">un jeu de hasard grandeur nature</div>
+    <h1 class="logo" data-i18n="logo">Le Dé<br>de la Vie</h1>
+    <div class="tagline" data-i18n="tagline">8 milliards de vies. Le dé en tire une au sort. Ça aurait pu être la tienne.</div>
     <div class="earth-btn" id="earthBtn" aria-label="Lancer">
       <svg viewBox="0 0 120 120"><g>
         <circle cx="60" cy="60" r="46" fill="#12B5A0" stroke="#17151F" stroke-width="5"/>
@@ -196,15 +205,15 @@
         <path d="M15 58 H105" stroke="#17151F" stroke-width="3.5" opacity=".55" fill="none"/>
       </g></svg>
     </div>
-    <div class="scrawl">clique la Terre &darr;</div>
-    <button class="big-btn" id="startBtn" style="margin-top:14px">Lancer le dé</button>
+    <div class="scrawl" data-i18n="scrawl">clique la Terre &darr;</div>
+    <button class="big-btn" id="startBtn" data-i18n="start_btn" style="margin-top:14px">Lancer le dé</button>
   </section>
 
   <!-- PLAY -->
   <section class="screen" id="s-play">
     <div class="hud">
-      <div class="chip-hud"><div class="l">vies tirées</div><div class="n" id="soulN">0</div></div>
-      <div class="chip-hud r"><div class="l">des gens comme ça</div><div class="n" id="countN">8 000 000 000</div></div>
+      <div class="chip-hud"><div class="l" data-i18n="hud_souls">vies tirées</div><div class="n" id="soulN">0</div></div>
+      <div class="chip-hud r"><div class="l" data-i18n="hud_count">des gens comme ça</div><div class="n" id="countN">8 000 000 000</div></div>
     </div>
 
     <div class="play">
@@ -213,13 +222,13 @@
         <div class="ico" id="ico"></div>
         <div class="die-wrap" id="dieWrap">
           <div class="die" id="die"></div>
-          <div class="die-hint" id="dieHint">clique le dé pour tirer</div>
+          <div class="die-hint" id="dieHint" data-i18n="die_hint">clique le dé pour tirer</div>
         </div>
         <div class="result" id="result"></div>
         <div class="caption" id="caption"></div>
-        <button class="src-btn" id="srcBtn">voir les probas</button>
+        <button class="src-btn" id="srcBtn" data-i18n="src_btn">voir les probas</button>
       </div>
-      <button class="next-btn" id="nextBtn">Continuer &rarr;</button>
+      <button class="next-btn" id="nextBtn" data-i18n="next_btn">Continuer &rarr;</button>
     </div>
 
     <div class="chips" id="chips"></div>
@@ -228,7 +237,7 @@
   <!-- FINAL -->
   <section class="screen" id="s-final">
     <div class="final">
-      <div class="final-title">le dé a parlé. voici ta nouvelle vie :</div>
+      <div class="final-title" data-i18n="final_title">le dé a parlé. voici ta nouvelle vie :</div>
       <div class="persona-card">
         <div class="stamp" id="stamp">1<br>/ 8 000 000 000</div>
         <div class="avatar" id="avatar"></div>
@@ -236,28 +245,34 @@
         <div class="persona-day" id="personaDay"></div>
         <div class="final-chips" id="finalChips"></div>
       </div>
-      <div class="question">Tu échanges ta vie contre la sienne ?</div>
+      <div class="question" data-i18n="question">Tu échanges ta vie contre la sienne ?</div>
       <div class="answer-row" id="answerRow">
-        <button class="ans no" id="ansNo">Non merci</button>
-        <button class="ans yes" id="ansYes">Carrément</button>
+        <button class="ans no" id="ansNo" data-i18n="ans_no">Non merci</button>
+        <button class="ans yes" id="ansYes" data-i18n="ans_yes">Carrément</button>
       </div>
       <div class="after" id="after"></div>
-      <div class="replay" id="replayRow"><button class="big-btn" id="replayBtn">Relancer le dé</button></div>
+      <div class="replay" id="replayRow"><button class="big-btn" id="replayBtn" data-i18n="replay_btn">Relancer le dé</button></div>
     </div>
   </section>
 
   <!-- FLASH (chargement rapide) -->
   <div id="flash"><div><div class="ff" id="flashFact"></div><div class="ffs" id="flashSrc"></div></div></div>
+
+  <!-- SÉLECTEUR DE LANGUE -->
+  <div class="lang-switch" role="group" aria-label="Langue / Language">
+    <button class="lang-btn" data-lang="fr">FR</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
 </div>
 
 <!-- MODAL -->
 <div class="modal" id="modal"><div class="m">
-  <div class="m-k" id="mK">les probas</div>
+  <div class="m-k" id="mK" data-i18n="modal_kicker">les probas</div>
   <div class="m-t" id="mT"></div>
   <div class="m-b" id="mB"></div>
   <div id="mDist"></div>
   <div class="m-src" id="mSrc"></div>
-  <button class="m-close" id="mClose">OK</button>
+  <button class="m-close" id="mClose" data-i18n="modal_close">OK</button>
 </div></div>
 
 <script>window.__SEED__={"countries": {"table": "countries", "source_id": "wpp", "year": 2024, "rows": [{"iso3": "FRA", "name_fr": "France", "name_en": "France", "region": "Europe de l'Ouest", "income_group": "high", "population": 66000000, "prep": "en", "coverage": "national"}, {"iso3": "AUT", "name_fr": "Autriche", "name_en": "Austria", "region": "Europe centrale", "income_group": "high", "population": 9100000, "prep": "en", "coverage": "national"}, {"iso3": "USA", "name_fr": "Etats-Unis", "name_en": "United States", "region": "Amerique du Nord", "income_group": "high", "population": 345000000, "prep": "aux", "coverage": "national"}, {"iso3": "BRA", "name_fr": "Bresil", "name_en": "Brazil", "region": "Amerique du Sud", "income_group": "upper_middle", "population": 212000000, "prep": "au", "coverage": "national"}, {"iso3": "IND", "name_fr": "Inde", "name_en": "India", "region": "Asie du Sud", "income_group": "lower_middle", "population": 1450000000, "prep": "en", "coverage": "national"}, {"iso3": "CHN", "name_fr": "Chine", "name_en": "China", "region": "Asie de l'Est", "income_group": "upper_middle", "population": 1410000000, "prep": "en", "coverage": "national"}, {"iso3": "NER", "name_fr": "Niger", "name_en": "Niger", "region": "Afrique de l'Ouest", "income_group": "low", "population": 27000000, "prep": "au", "coverage": "national"}]}, "age_sex": {"table": "age_sex", "source_id": "wpp", "year": 2024, "data": {"FRA": {"shares": {"a00_04|F": 0.02435, "a00_04|M": 0.02565, "a05_14|F": 0.056005, "a05_14|M": 0.058995, "a15_19|F": 0.02922, "a15_19|M": 0.03078, "a20_34|F": 0.0891, "a20_34|M": 0.0909, "a35_49|F": 0.09287, "a35_49|M": 0.09213, "a50_64|F": 0.09785, "a50_64|M": 0.09215, "a65_79|F": 0.0777, "a65_79|M": 0.0623, "a80p|F": 0.0504, "a80p|M": 0.0296}, "coverage": "national"}, "AUT": {"shares": {"a00_04|F": 0.021915, "a00_04|M": 0.023085, "a05_14|F": 0.0487, "a05_14|M": 0.0513, "a15_19|F": 0.026785, "a15_19|M": 0.028215, "a20_34|F": 0.091575, "a20_34|M": 0.093425, "a35_49|F": 0.1004, "a35_49|M": 0.0996, "a50_64|F": 0.103, "a50_64|M": 0.097, "a65_79|F": 0.080475, "a65_79|M": 0.064525, "a80p|F": 0.0441, "a80p|M": 0.0259}, "coverage": "national"}, "USA": {"shares": {"a00_04|F": 0.026785, "a00_04|M": 0.028215, "a05_14|F": 0.05844, "a05_14|M": 0.06156, "a15_19|F": 0.031655, "a15_19|M": 0.033345, "a20_34|F": 0.099, "a20_34|M": 0.101, "a35_49|F": 0.09538, "a35_49|M": 0.09462, "a50_64|F": 0.09785, "a50_64|M": 0.09215, "a65_79|F": 0.07215, "a65_79|M": 0.05785, "a80p|F": 0.0315, "a80p|M": 0.0185}, "coverage": "national"}, "BRA": {"shares": {"a00_04|F": 0.02922, "a00_04|M": 0.03078, "a05_14|F": 0.06818, "a05_14|M": 0.07182, "a15_19|F": 0.03896, "a15_19|M": 0.04104, "a20_34|F": 0.1188, "a20_34|M": 0.1212, "a35_49|F": 0.10542, "a35_49|M": 0.10458, "a50_64|F": 0.0824, "a50_64|M": 0.0776, "a65_79|F": 0.0444, "a65_79|M": 0.0356, "a80p|F": 0.0189, "a80p|M": 0.0111}, "coverage": "national"}, "IND": {"shares": {"a00_04|F": 0.03696, "a00_04|M": 0.04304, "a05_14|F": 0.07854, "a05_14|M": 0.09146, "a15_19|F": 0.04158, "a15_19|M": 0.04842, "a20_34|F": 0.1222, "a20_34|M": 0.1378, "a35_49|F": 0.0954, "a35_49|M": 0.1046, "a50_64|F": 0.0588, "a50_64|M": 0.0612, "a65_79|F": 0.0318, "a65_79|M": 0.0282, "a80p|F": 0.0121, "a80p|M": 0.0079}, "coverage": "national"}, "CHN": {"shares": {"a00_04|F": 0.02285, "a00_04|M": 0.02715, "a05_14|F": 0.05027, "a05_14|M": 0.05973, "a15_19|F": 0.02742, "a15_19|M": 0.03258, "a20_34|F": 0.09765, "a20_34|M": 0.11235, "a35_49|F": 0.10384, "a35_49|M": 0.11616, "a50_64|F": 0.097, "a50_64|M": 0.103, "a65_79|F": 0.05775, "a65_79|M": 0.05225, "a80p|F": 0.024, "a80p|M": 0.016}, "coverage": "national"}, "NER": {"shares": {"a00_04|F": 0.08766, "a00_04|M": 0.09234, "a05_14|F": 0.1461, "a05_14|M": 0.1539, "a15_19|F": 0.05357, "a15_19|M": 0.05643, "a20_34|F": 0.1089, "a20_34|M": 0.1111, "a35_49|F": 0.05522, "a35_49|M": 0.05478, "a50_64|F": 0.028325, "a50_64|M": 0.026675, "a65_79|F": 0.0111, "a65_79|M": 0.0089, "a80p|F": 0.00315, "a80p|M": 0.00185}, "coverage": "national"}}}, "settlement": {"table": "settlement", "source_id": "wup", "year": 2024, "data": {"FRA": {"shares": {"grande": 0.3, "ville": 0.51, "rural": 0.19}, "coverage": "national"}, "AUT": {"shares": {"grande": 0.28, "ville": 0.31, "rural": 0.41}, "coverage": "national"}, "USA": {"shares": {"grande": 0.45, "ville": 0.38, "rural": 0.17}, "coverage": "national"}, "BRA": {"shares": {"grande": 0.45, "ville": 0.42, "rural": 0.13}, "coverage": "national"}, "IND": {"shares": {"grande": 0.15, "ville": 0.21, "rural": 0.64}, "coverage": "national"}, "CHN": {"shares": {"grande": 0.35, "ville": 0.29, "rural": 0.36}, "coverage": "national"}, "NER": {"shares": {"grande": 0.05, "ville": 0.12, "rural": 0.83}, "coverage": "national"}}}, "income": {"table": "income", "source_id": "pip", "year": 2024, "data": {"FRA": {"global_percentile": [58, 72, 83, 90, 96], "coverage": "national"}, "AUT": {"global_percentile": [60, 74, 84, 91, 97], "coverage": "national"}, "USA": {"global_percentile": [55, 72, 84, 92, 98], "coverage": "national"}, "BRA": {"global_percentile": [25, 40, 55, 70, 88], "coverage": "national"}, "IND": {"global_percentile": [18, 30, 42, 55, 72], "coverage": "national"}, "CHN": {"global_percentile": [30, 45, 58, 72, 88], "coverage": "national"}, "NER": {"global_percentile": [4, 8, 13, 20, 34], "coverage": "national"}}}, "education": {"table": "education", "source_id": "barrolee", "year": 2020, "attainment_base": {"FRA": {"shares": {"aucune": 0.03, "primaire": 0.11, "secondaire": 0.44, "superieur": 0.42}, "coverage": "national"}, "AUT": {"shares": {"aucune": 0.02, "primaire": 0.1, "secondaire": 0.55, "superieur": 0.33}, "coverage": "national"}, "USA": {"shares": {"aucune": 0.02, "primaire": 0.06, "secondaire": 0.45, "superieur": 0.47}, "coverage": "national"}, "BRA": {"shares": {"aucune": 0.08, "primaire": 0.28, "secondaire": 0.44, "superieur": 0.2}, "coverage": "national"}, "IND": {"shares": {"aucune": 0.22, "primaire": 0.24, "secondaire": 0.36, "superieur": 0.18}, "coverage": "national"}, "CHN": {"shares": {"aucune": 0.08, "primaire": 0.22, "secondaire": 0.48, "superieur": 0.22}, "coverage": "national"}, "NER": {"shares": {"aucune": 0.63, "primaire": 0.22, "secondaire": 0.11, "superieur": 0.04}, "coverage": "national"}}, "child_enrollment": {"FRA": {"in_school": 0.99}, "AUT": {"in_school": 0.99}, "USA": {"in_school": 0.99}, "BRA": {"in_school": 0.96}, "IND": {"in_school": 0.9}, "CHN": {"in_school": 0.98}, "NER": {"in_school": 0.55}}, "factors": {"rural_penalty": {"aucune": 1.6, "primaire": 1.15, "secondaire": 0.7, "superieur": 0.45}, "income_prime": {"superieur": [0.4, 0.7, 1.0, 1.4, 1.9], "aucune": [1.9, 1.35, 1.0, 0.7, 0.45], "secondaire": [0.7, 0.85, 1.0, 1.15, 1.3]}, "gender_gap": {"IND": {"aucune": 1.5, "superieur": 0.65, "secondaire": 0.85}, "NER": {"aucune": 1.5, "superieur": 0.65, "secondaire": 0.85}}}}, "health": {"table": "health", "source_id": "gbd", "year": 2023, "country_group": {"FRA": "rich", "AUT": "rich", "USA": "rich", "BRA": "mid", "IND": "mid", "CHN": "mid", "NER": "low"}, "severity_base_group": {"rich": {"bonne": 0.62, "gene_legere": 0.24, "incap_moderee": 0.1, "incap_severe": 0.04}, "mid": {"bonne": 0.55, "gene_legere": 0.27, "incap_moderee": 0.13, "incap_severe": 0.05}, "low": {"bonne": 0.48, "gene_legere": 0.29, "incap_moderee": 0.16, "incap_severe": 0.07}}, "age_factors": {"boost": [0.6, 0.5, 0.6, 0.8, 1.0, 1.5, 2.4, 3.5], "good": [1.2, 1.25, 1.25, 1.15, 1.0, 0.8, 0.55, 0.4]}, "income_penalty": [1.4, 1.2, 1.0, 0.85, 0.7], "mental": {"base": 0.11, "rural_add": 0.01, "lowinc_add": 0.03, "min": 0.06, "max": 0.2}}, "family": {"table": "family", "source_id": "undesa_marriage", "year": 2023, "early_parenthood": ["IND", "NER"], "params": {"young_early": {"celibataire": 0.6, "couple": 0.4}, "young_late": {"celibataire": 0.85, "couple": 0.15}, "elder_widow": {"F": 0.55, "M": 0.28}, "mid_celibataire": {"a20_34": 0.35, "a35_49": 0.18, "a50_64": 0.14}, "mid_parent": {"a20_34": 0.4, "a35_49": 0.55, "a50_64": 0.5}, "early_cel_mult": 0.55, "early_par_mult": 1.3}}, "living": {"table": "living", "source_id": "wdi", "year": 2023, "rural_penalty": 0.75, "data": {"FRA": {"electricite": 1.0, "internet": 0.93, "eau": 1.0, "coverage": "national"}, "AUT": {"electricite": 1.0, "internet": 0.9, "eau": 1.0, "coverage": "national"}, "USA": {"electricite": 1.0, "internet": 0.92, "eau": 0.99, "coverage": "national"}, "BRA": {"electricite": 1.0, "internet": 0.84, "eau": 0.98, "coverage": "national"}, "IND": {"electricite": 0.99, "internet": 0.55, "eau": 0.93, "coverage": "national"}, "CHN": {"electricite": 1.0, "internet": 0.78, "eau": 0.97, "coverage": "national"}, "NER": {"electricite": 0.2, "internet": 0.2, "eau": 0.56, "coverage": "national"}}}};</script>

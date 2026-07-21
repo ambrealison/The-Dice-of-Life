@@ -6,6 +6,17 @@ Jeu web qui tire une vie humaine au hasard, étape par étape, pondérée par de
 
 Les données sont séparées du code. Le moteur (`engine.js`) est générique : il ne contient aucun chiffre pays. Tout vient des fichiers `data/*.json`, conformes à `schema.json`. Ajouter un pays, c'est ajouter des lignes de données, jamais toucher au code.
 
+## Bilingue (FR / EN)
+
+L'interface est disponible en français et en anglais. Toutes les chaînes visibles sont externalisées dans un objet de traductions `I18N = { fr, en }` en tête de `engine.js` (titres, étapes, légendes, portrait final, question d'échange, boutons, fenêtre « voir les probas », libellés de source). Le markup statique porte des attributs `data-i18n`, remplis à l'affichage.
+
+- **Sélecteur de langue** : un bouton `FR / EN` visible en bas à droite (en haut au centre sur mobile). Le choix est mémorisé (`localStorage`).
+- **Détection auto** : au premier chargement, la langue suit celle du navigateur (`fr*` → français, sinon anglais).
+- **Données** : les noms de pays viennent de `name_fr` / `name_en`, les libellés de dimensions de `label_fr` / `label_en` (`schema.json`). Aucune logique de données n'est traduite : on ne touche qu'aux chaînes d'interface.
+- **Grammaire du portrait** : gabarit de phrase distinct par langue. Le français emploie la préposition `en / au / aux` (champ `prep` de `countries.json`) devant le nom français ; l'anglais emploie « in » devant le nom anglais.
+
+Le changement de langue est instantané et reconstruit l'écran courant (partie en cours, portrait final, fenêtre des probas), y compris en plein milieu d'une vie.
+
 ## Structure
 
 ```
@@ -35,7 +46,11 @@ python3 -m http.server 8000
 # ouvrir http://localhost:8000
 ```
 
-`index.html` embarque aussi une copie du seed en repli, donc il tourne même ouvert en fichier local (`file://`) si le fetch échoue. La version `de-de-la-vie.html` fournie à part est entièrement autonome (tout inline), pratique pour un aperçu sans serveur.
+`index.html` embarque aussi une copie du seed en repli, donc il tourne même ouvert en fichier local (`file://`) si le fetch échoue. La version `de-de-la-vie-autonome.html` fournie à part est entièrement autonome (tout inline, `index.html` + `engine.js` fusionnés), pratique pour un aperçu sans serveur. On la régénère depuis les sources avec :
+
+```
+node -e 'const fs=require("fs");let h=fs.readFileSync("index.html","utf8");const e=fs.readFileSync("engine.js","utf8");fs.writeFileSync("de-de-la-vie-autonome.html",h.replace(String.raw`<script src="engine.js"></script>`,"<script>\n"+e+"\n</script>"));'
+```
 
 ## Valider les données
 

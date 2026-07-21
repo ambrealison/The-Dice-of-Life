@@ -33,71 +33,71 @@
     "_note": "Enumerations canoniques et figees. Le dictionnaire partage entre donnees et interface. Ne jamais renommer un id, seulement les libelles.",
 
     "ages": [
-      {"id": "a00_04", "label_fr": "0 a 4 ans",  "min": 0,  "max": 4,  "mid": 2,  "child": true},
-      {"id": "a05_14", "label_fr": "5 a 14 ans", "min": 5,  "max": 14, "mid": 10, "child": true},
-      {"id": "a15_19", "label_fr": "15 a 19 ans","min": 15, "max": 19, "mid": 17, "child": false},
-      {"id": "a20_34", "label_fr": "20 a 34 ans","min": 20, "max": 34, "mid": 27, "child": false},
-      {"id": "a35_49", "label_fr": "35 a 49 ans","min": 35, "max": 49, "mid": 42, "child": false},
-      {"id": "a50_64", "label_fr": "50 a 64 ans","min": 50, "max": 64, "mid": 57, "child": false},
-      {"id": "a65_79", "label_fr": "65 a 79 ans","min": 65, "max": 79, "mid": 72, "child": false},
-      {"id": "a80p",   "label_fr": "80 ans et plus","min": 80, "max": 120, "mid": 86, "child": false}
+      {"id": "a00_04", "label_fr": "0 a 4 ans",  "label_en": "0 to 4 years",  "min": 0,  "max": 4,  "mid": 2,  "child": true},
+      {"id": "a05_14", "label_fr": "5 a 14 ans", "label_en": "5 to 14 years", "min": 5,  "max": 14, "mid": 10, "child": true},
+      {"id": "a15_19", "label_fr": "15 a 19 ans","label_en": "15 to 19 years","min": 15, "max": 19, "mid": 17, "child": false},
+      {"id": "a20_34", "label_fr": "20 a 34 ans","label_en": "20 to 34 years","min": 20, "max": 34, "mid": 27, "child": false},
+      {"id": "a35_49", "label_fr": "35 a 49 ans","label_en": "35 to 49 years","min": 35, "max": 49, "mid": 42, "child": false},
+      {"id": "a50_64", "label_fr": "50 a 64 ans","label_en": "50 to 64 years","min": 50, "max": 64, "mid": 57, "child": false},
+      {"id": "a65_79", "label_fr": "65 a 79 ans","label_en": "65 to 79 years","min": 65, "max": 79, "mid": 72, "child": false},
+      {"id": "a80p",   "label_fr": "80 ans et plus","label_en": "80 and over","min": 80, "max": 120, "mid": 86, "child": false}
     ],
 
     "sexes": [
-      {"id": "F", "label_fr": "Femme"},
-      {"id": "M", "label_fr": "Homme"}
+      {"id": "F", "label_fr": "Femme", "label_en": "Woman"},
+      {"id": "M", "label_fr": "Homme", "label_en": "Man"}
     ],
 
     "settlement": [
-      {"id": "grande", "label_fr": "Grande ville"},
-      {"id": "ville",  "label_fr": "Ville"},
-      {"id": "rural",  "label_fr": "Campagne"}
+      {"id": "grande", "label_fr": "Grande ville", "label_en": "Big city"},
+      {"id": "ville",  "label_fr": "Ville",        "label_en": "Town"},
+      {"id": "rural",  "label_fr": "Campagne",     "label_en": "Countryside"}
     ],
 
     "income_quintiles": [
-      {"id": "q1", "label_fr": "Serre",       "within_country_share": 0.2},
-      {"id": "q2", "label_fr": "Modeste",     "within_country_share": 0.2},
-      {"id": "q3", "label_fr": "Au milieu",   "within_country_share": 0.2},
-      {"id": "q4", "label_fr": "Confortable", "within_country_share": 0.2},
-      {"id": "q5", "label_fr": "Peinard",     "within_country_share": 0.2}
+      {"id": "q1", "label_fr": "Serre",       "label_en": "Tight",       "within_country_share": 0.2},
+      {"id": "q2", "label_fr": "Modeste",     "label_en": "Modest",      "within_country_share": 0.2},
+      {"id": "q3", "label_fr": "Au milieu",   "label_en": "Middle",      "within_country_share": 0.2},
+      {"id": "q4", "label_fr": "Confortable", "label_en": "Comfortable", "within_country_share": 0.2},
+      {"id": "q5", "label_fr": "Peinard",     "label_en": "Cushy",       "within_country_share": 0.2}
     ],
 
     "education_adult": [
-      {"id": "aucune",     "label_fr": "Pas allee a l'ecole"},
-      {"id": "primaire",   "label_fr": "Niveau primaire"},
-      {"id": "secondaire", "label_fr": "Niveau lycee"},
-      {"id": "superieur",  "label_fr": "Etudes superieures"}
+      {"id": "aucune",     "label_fr": "Pas allee a l'ecole", "label_en": "Never went to school"},
+      {"id": "primaire",   "label_fr": "Niveau primaire",     "label_en": "Primary level"},
+      {"id": "secondaire", "label_fr": "Niveau lycee",        "label_en": "Secondary level"},
+      {"id": "superieur",  "label_fr": "Etudes superieures",  "label_en": "Higher education"}
     ],
 
     "education_child": [
-      {"id": "petite", "label_fr": "Trop petit pour l'ecole", "applies_to_ages": ["a00_04"]},
-      {"id": "ecole",  "label_fr": "A l'ecole",               "applies_to_ages": ["a05_14"]},
-      {"id": "hors",   "label_fr": "Non scolarise",           "applies_to_ages": ["a05_14"]}
+      {"id": "petite", "label_fr": "Trop petit pour l'ecole", "label_en": "Too young for school", "applies_to_ages": ["a00_04"]},
+      {"id": "ecole",  "label_fr": "A l'ecole",               "label_en": "In school",            "applies_to_ages": ["a05_14"]},
+      {"id": "hors",   "label_fr": "Non scolarise",           "label_en": "Out of school",        "applies_to_ages": ["a05_14"]}
     ],
 
     "health_states": [
-      {"id": "bonne",         "label_fr": "En pleine forme"},
-      {"id": "gene_legere",   "label_fr": "Une gene legere"},
-      {"id": "incap_moderee", "label_fr": "Une incapacite moderee"},
-      {"id": "incap_severe",  "label_fr": "Une incapacite severe"}
+      {"id": "bonne",         "label_fr": "En pleine forme",          "label_en": "In great shape"},
+      {"id": "gene_legere",   "label_fr": "Une gene legere",          "label_en": "A slight impairment"},
+      {"id": "incap_moderee", "label_fr": "Une incapacite moderee",   "label_en": "A moderate disability"},
+      {"id": "incap_severe",  "label_fr": "Une incapacite severe",    "label_en": "A severe disability"}
     ],
 
-    "mental": {"_note": "Indicateur binaire tire separement, valeur = probabilite d'un trouble mental ou addictif", "id": "trouble_mental", "label_fr": "Trouble de sante mentale"},
+    "mental": {"_note": "Indicateur binaire tire separement, valeur = probabilite d'un trouble mental ou addictif", "id": "trouble_mental", "label_fr": "Trouble de sante mentale", "label_en": "Mental-health condition"},
 
     "family": [
-      {"id": "enfant",      "label_fr": "Chez ses parents", "applies_to_ages": ["a00_04", "a05_14"]},
-      {"id": "celibataire", "label_fr": "Celibataire"},
-      {"id": "couple",      "label_fr": "En couple"},
-      {"id": "parent",      "label_fr": "Deja parent"},
-      {"id": "veuf",        "label_fr": "Veuf ou veuve"}
+      {"id": "enfant",      "label_fr": "Chez ses parents", "label_en": "Living with parents", "applies_to_ages": ["a00_04", "a05_14"]},
+      {"id": "celibataire", "label_fr": "Celibataire",      "label_en": "Single"},
+      {"id": "couple",      "label_fr": "En couple",        "label_en": "In a relationship"},
+      {"id": "parent",      "label_fr": "Deja parent",      "label_en": "Already a parent"},
+      {"id": "veuf",        "label_fr": "Veuf ou veuve",    "label_en": "Widowed"}
     ],
 
     "living_conditions": [
-      {"id": "electricite",  "label_fr": "Electricite a la maison"},
-      {"id": "internet",     "label_fr": "Connecte a internet"},
-      {"id": "eau",          "label_fr": "Eau potable au robinet"},
-      {"id": "assainissement","label_fr": "Assainissement de base", "optional": true},
-      {"id": "cuisson",      "label_fr": "Cuisson propre",          "optional": true}
+      {"id": "electricite",  "label_fr": "Electricite a la maison", "label_en": "Electricity at home"},
+      {"id": "internet",     "label_fr": "Connecte a internet",     "label_en": "Connected to the internet"},
+      {"id": "eau",          "label_fr": "Eau potable au robinet",  "label_en": "Running drinking water"},
+      {"id": "assainissement","label_fr": "Assainissement de base", "label_en": "Basic sanitation",  "optional": true},
+      {"id": "cuisson",      "label_fr": "Cuisson propre",          "label_en": "Clean cooking",     "optional": true}
     ]
   },
 
