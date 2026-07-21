@@ -72,11 +72,15 @@ SSL_CERT_FILE=/root/.ccr/ca-bundle.crt python3 collect.py   # lot par lot
 node validate.js
 ```
 
-- **Lot 1 (preuve de bout en bout)** : Inde, Chine, États-Unis. Niveaux 1, 2, 3,
-  4, 5, 8 en données nationales réelles (World Bank WDI — qui redistribue WPP,
-  WUP, UIS/Barro-Lee, JMP — et PIP pour le revenu). Niveaux 6 (santé/GBD) et 7
-  (famille/marriage) : méthode figée et documentée, repli marqué (sources
-  primaires gated/bloquées, voir ci-dessous).
+- **Lots livrés** : lot 1 (Inde, Chine, États-Unis, preuve de bout en bout) puis
+  lot 2 (les **20 pays les plus peuplés**). Domaine = 23 pays (top 20 + France,
+  Autriche, Niger conservés du seed). Pour dérouler un autre lot, ajuster la
+  liste `TARGETS` de `collect.py` et relancer.
+- Niveaux 1, 2, 3, 4, 5, 8 en données nationales réelles (World Bank WDI — qui
+  redistribue WPP, WUP, UIS/Barro-Lee, JMP — et PIP pour le revenu). Pour le top
+  20, tout est national sauf 2 replis de scolarisation enfant (Chine, RD Congo).
+  Niveaux 6 (santé/GBD) et 7 (famille/marriage) : méthode figée et documentée,
+  repli marqué (sources primaires gated/bloquées, voir `COVERAGE_REPORT.md`).
 - **Reproductible** : `collect.py` relit le cache `data/raw/` par défaut
   (`REFRESH=1` force un nouveau téléchargement). Le test d'atteignabilité des
   sources est consigné dans `data/raw/_reachability_2026-07-21.md`.

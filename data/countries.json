@@ -4,47 +4,6 @@
   "year": 2024,
   "rows": [
     {
-      "iso3": "FRA",
-      "name_fr": "France",
-      "name_en": "France",
-      "region": "Europe de l'Ouest",
-      "income_group": "high",
-      "population": 66000000,
-      "prep": "en",
-      "coverage": "national"
-    },
-    {
-      "iso3": "AUT",
-      "name_fr": "Autriche",
-      "name_en": "Austria",
-      "region": "Europe centrale",
-      "income_group": "high",
-      "population": 9100000,
-      "prep": "en",
-      "coverage": "national"
-    },
-    {
-      "iso3": "USA",
-      "name_fr": "Etats-Unis",
-      "name_en": "United States",
-      "region": "Amerique du Nord",
-      "income_group": "high",
-      "population": 340003797,
-      "prep": "aux",
-      "coverage": "national",
-      "year": 2024
-    },
-    {
-      "iso3": "BRA",
-      "name_fr": "Bresil",
-      "name_en": "Brazil",
-      "region": "Amerique du Sud",
-      "income_group": "upper_middle",
-      "population": 212000000,
-      "prep": "au",
-      "coverage": "national"
-    },
-    {
       "iso3": "IND",
       "name_fr": "Inde",
       "name_en": "India",
@@ -67,6 +26,214 @@
       "year": 2024
     },
     {
+      "iso3": "USA",
+      "name_fr": "Etats-Unis",
+      "name_en": "United States",
+      "region": "Amerique du Nord",
+      "income_group": "high",
+      "population": 340003797,
+      "prep": "aux",
+      "coverage": "national",
+      "year": 2024
+    },
+    {
+      "iso3": "IDN",
+      "name_fr": "Indonesie",
+      "name_en": "Indonesia",
+      "region": "Asie du Sud-Est",
+      "income_group": "upper_middle",
+      "population": 283487931,
+      "prep": "en",
+      "coverage": "national",
+      "year": 2024
+    },
+    {
+      "iso3": "PAK",
+      "name_fr": "Pakistan",
+      "name_en": "Pakistan",
+      "region": "Asie du Sud",
+      "income_group": "lower_middle",
+      "population": 251269164,
+      "prep": "au",
+      "coverage": "national",
+      "year": 2024
+    },
+    {
+      "iso3": "NGA",
+      "name_fr": "Nigeria",
+      "name_en": "Nigeria",
+      "region": "Afrique de l'Ouest",
+      "income_group": "lower_middle",
+      "population": 232679478,
+      "prep": "au",
+      "coverage": "national",
+      "year": 2024
+    },
+    {
+      "iso3": "BRA",
+      "name_fr": "Bresil",
+      "name_en": "Brazil",
+      "region": "Amerique du Sud",
+      "income_group": "upper_middle",
+      "population": 211998573,
+      "prep": "au",
+      "coverage": "national",
+      "year": 2024
+    },
+    {
+      "iso3": "BGD",
+      "name_fr": "Bangladesh",
+      "name_en": "Bangladesh",
+      "region": "Asie du Sud",
+      "income_group": "lower_middle",
+      "population": 173562364,
+      "prep": "au",
+      "coverage": "national",
+      "year": 2024
+    },
+    {
+      "iso3": "RUS",
+      "name_fr": "Russie",
+      "name_en": "Russia",
+      "region": "Europe de l'Est",
+      "income_group": "high",
+      "population": 143669648,
+      "prep": "en",
+      "coverage": "national",
+      "year": 2024
+    },
+    {
+      "iso3": "ETH",
+      "name_fr": "Ethiopie",
+      "name_en": "Ethiopia",
+      "region": "Afrique de l'Est",
+      "income_group": "low",
+      "population": 132059767,
+      "prep": "en",
+      "coverage": "national",
+      "year": 2024
+    },
+    {
+      "iso3": "MEX",
+      "name_fr": "Mexique",
+      "name_en": "Mexico",
+      "region": "Amerique centrale",
+      "income_group": "upper_middle",
+      "population": 130861007,
+      "prep": "au",
+      "coverage": "national",
+      "year": 2024
+    },
+    {
+      "iso3": "JPN",
+      "name_fr": "Japon",
+      "name_en": "Japan",
+      "region": "Asie de l'Est",
+      "income_group": "high",
+      "population": 123975371,
+      "prep": "au",
+      "coverage": "national",
+      "year": 2024
+    },
+    {
+      "iso3": "EGY",
+      "name_fr": "Egypte",
+      "name_en": "Egypt",
+      "region": "Afrique du Nord",
+      "income_group": "lower_middle",
+      "population": 116538258,
+      "prep": "en",
+      "coverage": "national",
+      "year": 2024
+    },
+    {
+      "iso3": "PHL",
+      "name_fr": "Philippines",
+      "name_en": "Philippines",
+      "region": "Asie du Sud-Est",
+      "income_group": "upper_middle",
+      "population": 115843670,
+      "prep": "aux",
+      "coverage": "national",
+      "year": 2024
+    },
+    {
+      "iso3": "COD",
+      "name_fr": "Rep. dem. du Congo",
+      "name_en": "DR Congo",
+      "region": "Afrique centrale",
+      "income_group": "low",
+      "population": 109276265,
+      "prep": "en",
+      "coverage": "national",
+      "year": 2024
+    },
+    {
+      "iso3": "VNM",
+      "name_fr": "Vietnam",
+      "name_en": "Vietnam",
+      "region": "Asie du Sud-Est",
+      "income_group": "upper_middle",
+      "population": 100987686,
+      "prep": "au",
+      "coverage": "national",
+      "year": 2024
+    },
+    {
+      "iso3": "IRN",
+      "name_fr": "Iran",
+      "name_en": "Iran",
+      "region": "Asie de l'Ouest",
+      "income_group": "upper_middle",
+      "population": 91567738,
+      "prep": "en",
+      "coverage": "national",
+      "year": 2024
+    },
+    {
+      "iso3": "TUR",
+      "name_fr": "Turquie",
+      "name_en": "Turkiye",
+      "region": "Asie de l'Ouest",
+      "income_group": "upper_middle",
+      "population": 85518661,
+      "prep": "en",
+      "coverage": "national",
+      "year": 2024
+    },
+    {
+      "iso3": "DEU",
+      "name_fr": "Allemagne",
+      "name_en": "Germany",
+      "region": "Europe de l'Ouest",
+      "income_group": "high",
+      "population": 83516593,
+      "prep": "en",
+      "coverage": "national",
+      "year": 2024
+    },
+    {
+      "iso3": "THA",
+      "name_fr": "Thailande",
+      "name_en": "Thailand",
+      "region": "Asie du Sud-Est",
+      "income_group": "upper_middle",
+      "population": 71668011,
+      "prep": "en",
+      "coverage": "national",
+      "year": 2024
+    },
+    {
+      "iso3": "FRA",
+      "name_fr": "France",
+      "name_en": "France",
+      "region": "Europe de l'Ouest",
+      "income_group": "high",
+      "population": 66000000,
+      "prep": "en",
+      "coverage": "national"
+    },
+    {
       "iso3": "NER",
       "name_fr": "Niger",
       "name_en": "Niger",
@@ -74,6 +241,16 @@
       "income_group": "low",
       "population": 27000000,
       "prep": "au",
+      "coverage": "national"
+    },
+    {
+      "iso3": "AUT",
+      "name_fr": "Autriche",
+      "name_en": "Austria",
+      "region": "Europe centrale",
+      "income_group": "high",
+      "population": 9100000,
+      "prep": "en",
       "coverage": "national"
     }
   ]

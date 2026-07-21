@@ -29,9 +29,9 @@
     },
     "BRA": {
       "shares": {
-        "grande": 0.45,
-        "ville": 0.42,
-        "rural": 0.13
+        "grande": 0.44099574670250297,
+        "ville": 0.43796280283064304,
+        "rural": 0.121041450466854
       },
       "coverage": "national"
     },
@@ -56,6 +56,134 @@
         "grande": 0.05,
         "ville": 0.12,
         "rural": 0.83
+      },
+      "coverage": "national"
+    },
+    "IDN": {
+      "shares": {
+        "grande": 0.14253599388680901,
+        "ville": 0.444973641501188,
+        "rural": 0.41249036461200295
+      },
+      "coverage": "national"
+    },
+    "PAK": {
+      "shares": {
+        "grande": 0.198796665714222,
+        "ville": 0.19293770264668303,
+        "rural": 0.608265631639095
+      },
+      "coverage": "national"
+    },
+    "NGA": {
+      "shares": {
+        "grande": 0.172796210244206,
+        "ville": 0.456959465329453,
+        "rural": 0.37024432442634103
+      },
+      "coverage": "national"
+    },
+    "BGD": {
+      "shares": {
+        "grande": 0.169675385384818,
+        "ville": 0.157107810938489,
+        "rural": 0.673216803676693
+      },
+      "coverage": "national"
+    },
+    "RUS": {
+      "shares": {
+        "grande": 0.238566429841883,
+        "ville": 0.512552706335184,
+        "rural": 0.24888086382293295
+      },
+      "coverage": "national"
+    },
+    "ETH": {
+      "shares": {
+        "grande": 0.0431897475633135,
+        "ville": 0.1930330917921555,
+        "rural": 0.7637771606445309
+      },
+      "coverage": "national"
+    },
+    "MEX": {
+      "shares": {
+        "grande": 0.424429685154417,
+        "ville": 0.37310912082170095,
+        "rural": 0.20246119402388207
+      },
+      "coverage": "national"
+    },
+    "JPN": {
+      "shares": {
+        "grande": 0.654309314387936,
+        "ville": 0.267592403646595,
+        "rural": 0.07809828196546897
+      },
+      "coverage": "national"
+    },
+    "EGY": {
+      "shares": {
+        "grande": 0.24301036832041897,
+        "ville": 0.18499399561798505,
+        "rural": 0.571995636061596
+      },
+      "coverage": "national"
+    },
+    "PHL": {
+      "shares": {
+        "grande": 0.146174667981427,
+        "ville": 0.4083463152340501,
+        "rural": 0.44547901678452295
+      },
+      "coverage": "national"
+    },
+    "COD": {
+      "shares": {
+        "grande": 0.2398633225614,
+        "ville": 0.207592481847353,
+        "rural": 0.552544195591247
+      },
+      "coverage": "national"
+    },
+    "VNM": {
+      "shares": {
+        "grande": 0.194630165107457,
+        "ville": 0.190270538322719,
+        "rural": 0.615099296569824
+      },
+      "coverage": "national"
+    },
+    "IRN": {
+      "shares": {
+        "grande": 0.251541530926537,
+        "ville": 0.518659732501197,
+        "rural": 0.22979873657226602
+      },
+      "coverage": "national"
+    },
+    "TUR": {
+      "shares": {
+        "grande": 0.388830561788146,
+        "ville": 0.504612561085741,
+        "rural": 0.10655687712611295
+      },
+      "coverage": "national"
+    },
+    "DEU": {
+      "shares": {
+        "grande": 0.0969588642103732,
+        "ville": 0.7232525683687518,
+        "rural": 0.179788567420875
+      },
+      "coverage": "national"
+    },
+    "THA": {
+      "shares": {
+        "grande": 0.21364478777009702,
+        "ville": 0.405044550621224,
+        "rural": 0.381310661608679
       },
       "coverage": "national"
     }

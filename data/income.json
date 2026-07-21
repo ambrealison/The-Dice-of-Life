@@ -36,13 +36,14 @@
     },
     "BRA": {
       "global_percentile": [
-        25,
-        40,
-        55,
-        70,
-        88
+        27,
+        59,
+        75,
+        84,
+        96
       ],
-      "coverage": "national"
+      "coverage": "national",
+      "survey_year": 2024
     },
     "IND": {
       "global_percentile": [
@@ -75,6 +76,182 @@
         34
       ],
       "coverage": "national"
+    },
+    "IDN": {
+      "global_percentile": [
+        13,
+        27,
+        40,
+        55,
+        75
+      ],
+      "coverage": "national",
+      "survey_year": 2025
+    },
+    "PAK": {
+      "global_percentile": [
+        5,
+        12,
+        21,
+        33,
+        60
+      ],
+      "coverage": "national",
+      "survey_year": 2024
+    },
+    "NGA": {
+      "global_percentile": [
+        3,
+        6,
+        12,
+        22,
+        49
+      ],
+      "coverage": "national",
+      "survey_year": 2022
+    },
+    "BGD": {
+      "global_percentile": [
+        12,
+        25,
+        36,
+        48,
+        71
+      ],
+      "coverage": "national",
+      "survey_year": 2022
+    },
+    "RUS": {
+      "global_percentile": [
+        72,
+        82,
+        87,
+        90,
+        96
+      ],
+      "coverage": "national",
+      "survey_year": 2023
+    },
+    "ETH": {
+      "global_percentile": [
+        3,
+        6,
+        12,
+        22,
+        48
+      ],
+      "coverage": "national",
+      "survey_year": 2021
+    },
+    "MEX": {
+      "global_percentile": [
+        32,
+        56,
+        68,
+        80,
+        92
+      ],
+      "coverage": "national",
+      "survey_year": 2024
+    },
+    "JPN": {
+      "global_percentile": [
+        72,
+        86,
+        88,
+        94,
+        97
+      ],
+      "coverage": "national",
+      "survey_year": 2020
+    },
+    "EGY": {
+      "global_percentile": [
+        21,
+        36,
+        47,
+        55,
+        75
+      ],
+      "coverage": "national",
+      "survey_year": 2021
+    },
+    "PHL": {
+      "global_percentile": [
+        7,
+        20,
+        32,
+        47,
+        72
+      ],
+      "coverage": "national",
+      "survey_year": 2023
+    },
+    "COD": {
+      "global_percentile": [
+        0,
+        1,
+        2,
+        4,
+        26
+      ],
+      "coverage": "national",
+      "survey_year": 2020
+    },
+    "VNM": {
+      "global_percentile": [
+        32,
+        55,
+        65,
+        75,
+        87
+      ],
+      "coverage": "national",
+      "survey_year": 2022
+    },
+    "IRN": {
+      "global_percentile": [
+        22,
+        47,
+        56,
+        68,
+        84
+      ],
+      "coverage": "national",
+      "survey_year": 2023
+    },
+    "TUR": {
+      "global_percentile": [
+        59,
+        76,
+        84,
+        88,
+        97
+      ],
+      "coverage": "national",
+      "survey_year": 2023
+    },
+    "DEU": {
+      "global_percentile": [
+        84,
+        92,
+        94,
+        96,
+        99
+      ],
+      "coverage": "national",
+      "survey_year": 2022
+    },
+    "THA": {
+      "global_percentile": [
+        47,
+        61,
+        72,
+        80,
+        88
+      ],
+      "coverage": "national",
+      "survey_year": 2024
     }
   }
 }

@@ -2,7 +2,7 @@
   "table": "income_world_ref",
   "source_id": "pip",
   "year": 2026,
-  "note": "Distribution mondiale du revenu/consommation en dollars/jour PPA. Chaque décile de chaque pays de l'échantillon est un point de revenu moyen (part_décile x moyenne x 10) pondéré par population/10. CDF = [revenu, part cumulée].",
+  "note": "Distribution mondiale du revenu/consommation en dollars/jour PPA. Chaque décile de chaque pays de l'échantillon est un point de revenu moyen (part x moyenne x 10) pondéré par population/10. CDF = [revenu, part cumulée].",
   "countries_used": [
     {
       "iso3": "IND",

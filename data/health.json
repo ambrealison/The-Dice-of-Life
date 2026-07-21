@@ -9,7 +9,23 @@
     "BRA": "mid",
     "IND": "mid",
     "CHN": "mid",
-    "NER": "low"
+    "NER": "low",
+    "IDN": "mid",
+    "PAK": "mid",
+    "NGA": "mid",
+    "BGD": "mid",
+    "RUS": "rich",
+    "ETH": "low",
+    "MEX": "mid",
+    "JPN": "rich",
+    "EGY": "mid",
+    "PHL": "mid",
+    "COD": "low",
+    "VNM": "mid",
+    "IRN": "mid",
+    "TUR": "mid",
+    "DEU": "rich",
+    "THA": "mid"
   },
   "severity_base_group": {
     "rich": {

@@ -3,8 +3,13 @@
   "source_id": "undesa_marriage",
   "year": 2023,
   "early_parenthood": [
+    "BGD",
+    "COD",
+    "ETH",
     "IND",
-    "NER"
+    "NER",
+    "NGA",
+    "PAK"
   ],
   "params": {
     "young_early": {

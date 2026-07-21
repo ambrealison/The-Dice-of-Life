@@ -33,12 +33,13 @@
     },
     "BRA": {
       "shares": {
-        "aucune": 0.08,
-        "primaire": 0.28,
-        "secondaire": 0.44,
-        "superieur": 0.2
+        "aucune": 0.20429199218750005,
+        "primaire": 0.17838023150392301,
+        "secondaire": 0.445390978212874,
+        "superieur": 0.17193679809570298
       },
-      "coverage": "national"
+      "coverage": "national",
+      "year": 2024
     },
     "IND": {
       "shares": {
@@ -68,6 +69,166 @@
         "superieur": 0.04
       },
       "coverage": "national"
+    },
+    "IDN": {
+      "shares": {
+        "aucune": 0.16168917682558104,
+        "primaire": 0.44726460156391495,
+        "secondaire": 0.29777784765283477,
+        "superieur": 0.09326837395766921
+      },
+      "coverage": "national",
+      "year": 2023
+    },
+    "PAK": {
+      "shares": {
+        "aucune": 0.5077706909179691,
+        "primaire": 0.23158925976503897,
+        "secondaire": 0.16135324511777316,
+        "superieur": 0.0992868041992188
+      },
+      "coverage": "national",
+      "year": 2021
+    },
+    "NGA": {
+      "shares": {
+        "aucune": 0.290348587036133,
+        "primaire": 0.228923416137695,
+        "secondaire": 0.37505889892578104,
+        "superieur": 0.105669097900391
+      },
+      "coverage": "national",
+      "year": 2024
+    },
+    "BGD": {
+      "shares": {
+        "aucune": 0.45319610595703097,
+        "primaire": 0.21024250030517605,
+        "secondaire": 0.2615332575055987,
+        "superieur": 0.0750281362321943
+      },
+      "coverage": "national",
+      "year": 2023
+    },
+    "RUS": {
+      "shares": {
+        "aucune": 0.0,
+        "primaire": 0.0709264056053659,
+        "secondaire": 0.516897195163677,
+        "superieur": 0.41217639923095706
+      },
+      "coverage": "national",
+      "year": 2021
+    },
+    "ETH": {
+      "shares": {
+        "aucune": 0.687324295043945,
+        "primaire": 0.21348870277404822,
+        "secondaire": 0.061280901432037294,
+        "superieur": 0.0379061007499695
+      },
+      "coverage": "national",
+      "year": 2022
+    },
+    "MEX": {
+      "shares": {
+        "aucune": 0.14809501647949208,
+        "primaire": 0.4433862686157229,
+        "secondaire": 0.22474790573120104,
+        "superieur": 0.183770809173584
+      },
+      "coverage": "national",
+      "year": 2024
+    },
+    "JPN": {
+      "shares": {
+        "aucune": 0.004084396362304954,
+        "primaire": 0.1441484832763671,
+        "secondaire": 0.5963631248474119,
+        "superieur": 0.255403995513916
+      },
+      "coverage": "national",
+      "year": 2020
+    },
+    "EGY": {
+      "shares": {
+        "aucune": 0.307780361210539,
+        "primaire": 0.13529593587210598,
+        "secondaire": 0.37640079446426605,
+        "superieur": 0.180522908453089
+      },
+      "coverage": "national",
+      "year": 2023
+    },
+    "PHL": {
+      "shares": {
+        "aucune": 0.14293586730956997,
+        "primaire": 0.5124561309814459,
+        "secondaire": 0.16385080337524405,
+        "superieur": 0.18075719833374
+      },
+      "coverage": "national",
+      "year": 2022
+    },
+    "COD": {
+      "shares": {
+        "aucune": 0.338564529418945,
+        "primaire": 0.357712173461914,
+        "secondaire": 0.21221269607543983,
+        "superieur": 0.0915106010437012
+      },
+      "coverage": "national",
+      "year": 2023
+    },
+    "VNM": {
+      "shares": {
+        "aucune": 0.12461883690825903,
+        "primaire": 0.4806336015980429,
+        "secondaire": 0.28153773625701206,
+        "superieur": 0.113209825236686
+      },
+      "coverage": "national",
+      "year": 2023
+    },
+    "IRN": {
+      "shares": {
+        "aucune": 0.1311724526329201,
+        "primaire": 0.41204654914478195,
+        "secondaire": 0.27754916917879696,
+        "superieur": 0.179231829043501
+      },
+      "coverage": "national",
+      "year": 2023
+    },
+    "TUR": {
+      "shares": {
+        "aucune": 0.13774648398831502,
+        "primaire": 0.451627731589061,
+        "secondaire": 0.19198239324484798,
+        "superieur": 0.218643391177776
+      },
+      "coverage": "national",
+      "year": 2023
+    },
+    "DEU": {
+      "shares": {
+        "aucune": 0.0,
+        "primaire": 0.18132460087620006,
+        "secondaire": 0.513380857522477,
+        "superieur": 0.305294541601323
+      },
+      "coverage": "national",
+      "year": 2023
+    },
+    "THA": {
+      "shares": {
+        "aucune": 0.24554793881792503,
+        "primaire": 0.36330307006592,
+        "secondaire": 0.21764379931317596,
+        "superieur": 0.17350519180297902
+      },
+      "coverage": "national",
+      "year": 2022
     }
   },
   "child_enrollment": {
@@ -80,23 +241,103 @@
     "USA": {
       "in_school": 0.9602,
       "coverage": "national",
-      "year": 2022,
-      "source": "SE.PRM.UNER.ZS"
+      "year": 2022
     },
     "BRA": {
-      "in_school": 0.96
+      "in_school": 0.9781,
+      "coverage": "national",
+      "year": 2024
     },
     "IND": {
       "in_school": 0.999,
       "coverage": "national",
-      "year": 2024,
-      "source": "SE.PRM.UNER.ZS"
+      "year": 2024
     },
     "CHN": {
-      "in_school": 0.98
+      "in_school": 0.9993,
+      "coverage": "regional"
     },
     "NER": {
       "in_school": 0.55
+    },
+    "IDN": {
+      "in_school": 0.9893,
+      "coverage": "national",
+      "year": 2024
+    },
+    "PAK": {
+      "in_school": 0.8207,
+      "coverage": "national",
+      "year": 2024
+    },
+    "NGA": {
+      "in_school": 0.7568,
+      "coverage": "national",
+      "year": 2023
+    },
+    "BGD": {
+      "in_school": 0.9414,
+      "coverage": "national",
+      "year": 2024
+    },
+    "RUS": {
+      "in_school": 0.9506,
+      "coverage": "national",
+      "year": 2023
+    },
+    "ETH": {
+      "in_school": 0.7754,
+      "coverage": "national",
+      "year": 2024
+    },
+    "MEX": {
+      "in_school": 0.9964,
+      "coverage": "national",
+      "year": 2024
+    },
+    "JPN": {
+      "in_school": 0.9993,
+      "coverage": "national",
+      "year": 2023
+    },
+    "EGY": {
+      "in_school": 0.9649,
+      "coverage": "national",
+      "year": 2024
+    },
+    "PHL": {
+      "in_school": 0.8836,
+      "coverage": "national",
+      "year": 2024
+    },
+    "VNM": {
+      "in_school": 0.9827,
+      "coverage": "national",
+      "year": 2024
+    },
+    "IRN": {
+      "in_school": 0.999,
+      "coverage": "national",
+      "year": 2023
+    },
+    "TUR": {
+      "in_school": 0.994,
+      "coverage": "national",
+      "year": 2023
+    },
+    "DEU": {
+      "in_school": 0.9973,
+      "coverage": "national",
+      "year": 2024
+    },
+    "THA": {
+      "in_school": 0.9945,
+      "coverage": "national",
+      "year": 2024
+    },
+    "COD": {
+      "in_school": 0.7754,
+      "coverage": "income_group"
     }
   },
   "factors": {

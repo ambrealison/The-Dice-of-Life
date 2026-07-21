@@ -25,10 +25,12 @@
       "eau_source": "SH.H2O.SMDW.ZS"
     },
     "BRA": {
-      "electricite": 1.0,
-      "internet": 0.84,
-      "eau": 0.98,
-      "coverage": "national"
+      "electricite": 0.998,
+      "internet": 0.8446,
+      "eau": 0.8862,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.SMDW.ZS"
     },
     "IND": {
       "electricite": 0.999,
@@ -51,6 +53,134 @@
       "internet": 0.2,
       "eau": 0.56,
       "coverage": "national"
+    },
+    "IDN": {
+      "electricite": 0.999,
+      "internet": 0.7278,
+      "eau": 0.3046,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.SMDW.ZS"
+    },
+    "PAK": {
+      "electricite": 0.957,
+      "internet": 0.5725,
+      "eau": 0.4497,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.SMDW.ZS"
+    },
+    "NGA": {
+      "electricite": 0.625,
+      "internet": 0.4121,
+      "eau": 0.299,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.SMDW.ZS"
+    },
+    "BGD": {
+      "electricite": 0.995,
+      "internet": 0.5342,
+      "eau": 0.5913,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.SMDW.ZS"
+    },
+    "RUS": {
+      "electricite": 1.0,
+      "internet": 0.9436,
+      "eau": 0.7626,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.SMDW.ZS"
+    },
+    "ETH": {
+      "electricite": 0.566,
+      "internet": 0.2194,
+      "eau": 0.1355,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.SMDW.ZS"
+    },
+    "MEX": {
+      "electricite": 0.998,
+      "internet": 0.8312,
+      "eau": 0.4297,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.SMDW.ZS"
+    },
+    "JPN": {
+      "electricite": 1.0,
+      "internet": 0.8554,
+      "eau": 0.9873,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.SMDW.ZS"
+    },
+    "EGY": {
+      "electricite": 1.0,
+      "internet": 0.7465,
+      "eau": 0.7894,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.SMDW.ZS"
+    },
+    "PHL": {
+      "electricite": 0.948,
+      "internet": 0.6726,
+      "eau": 0.4848,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.SMDW.ZS"
+    },
+    "COD": {
+      "electricite": 0.225,
+      "internet": 0.1967,
+      "eau": 0.1187,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.SMDW.ZS"
+    },
+    "VNM": {
+      "electricite": 1.0,
+      "internet": 0.8415,
+      "eau": 0.5858,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.SMDW.ZS"
+    },
+    "IRN": {
+      "electricite": 1.0,
+      "internet": 0.8534,
+      "eau": 0.9441,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.SMDW.ZS"
+    },
+    "TUR": {
+      "electricite": 1.0,
+      "internet": 0.8731,
+      "eau": 0.9599,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.BASW.ZS"
+    },
+    "DEU": {
+      "electricite": 1.0,
+      "internet": 0.935,
+      "eau": 0.9992,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.SMDW.ZS"
+    },
+    "THA": {
+      "electricite": 1.0,
+      "internet": 0.9087,
+      "eau": 1.0,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.BASW.ZS"
     }
   }
 }
