@@ -57,6 +57,17 @@ const ed = load("education");
 DOMAIN.forEach(iso => { if (need(ed.attainment_base, iso, "education.attainment_base")) validShares(ed.attainment_base[iso].shares, EDU, `education base ${iso}`);
   if (need(ed.child_enrollment, iso, "education.child_enrollment")) { if (!inRange(ed.child_enrollment[iso].in_school,0,1)) err(`education ${iso}: in_school hors [0,1]`); }});
 ["rural_penalty","income_prime","gender_gap"].forEach(f => { if (!ed.factors || !ed.factors[f]) err(`education.factors.${f} manquant`); });
+// base optionnelle par pays x groupe d'age x sexe : chaque cellule presente doit sommer a 1 et n'utiliser que des buckets connus
+if (ed.attainment_by_age) {
+  for (const iso in ed.attainment_by_age) {
+    if (!DOMAIN.includes(iso)) warns.push(`education.attainment_by_age: ${iso} hors domaine`);
+    for (const age in ed.attainment_by_age[iso]) {
+      for (const sex in ed.attainment_by_age[iso][age]) {
+        validShares(ed.attainment_by_age[iso][age][sex].shares, EDU, `education by_age ${iso}/${age}/${sex}`);
+      }
+    }
+  }
+}
 
 // health
 const he = load("health");

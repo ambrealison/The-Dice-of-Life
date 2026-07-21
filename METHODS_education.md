@@ -25,11 +25,29 @@ aucune     = 100              − SE.PRM.CUAT.ZS          (borné ≥ 0)
 puis normalisation à 1. `source_id = barrolee` (primaire déclarée au schéma,
 secondaire `uis`), `coverage = national`, `year` = année de la donnée WDI.
 
-> La base reste **par pays** pour le lot 1 (comme le seed : `attainment_base[iso]`).
-> La généralisation à `iso × groupe d'âge adulte × sexe` avec Barro-Lee brut est
-> **autorisée** mais optionnelle (voir `METHODS_engine.md`) ; elle sera activée
-> quand la base Barro-Lee complète sera récupérée (barrolee.com a un certificat
-> cassé ; à faire via un miroir OWID).
+### Base par âge × sexe (ACTIVÉE) — `attainment_by_age`
+
+En plus de la base pays (repli), une base **par pays × groupe d'âge × sexe** est
+construite depuis Barro-Lee 2010, redistribué par World Bank EdStats. Partition
+des 4 niveaux, somme = 100 % par âge (vérifié) :
+
+```
+aucune     = BAR.NOED.<age>[.FE].ZS
+primaire   = BAR.PRM.ICMP.<age>[.FE].ZS   (« Total incomplete+completed primary »)
+secondaire = BAR.SEC.ICMP.<age>[.FE].ZS
+superieur  = BAR.TER.ICMP.<age>[.FE].ZS
+```
+
+Groupes 5 ans Barro-Lee (15-19 … 75+) agrégés vers les 6 buckets adultes,
+pondérés par la population de chaque groupe (WDI/WPP). WDI ne donnant que le total
+et le féminin, le **masculin** est reconstitué par pondération population :
+`part_M = (part_tot·N_tot − part_F·N_F) / N_M`. Écrit dans
+`attainment_by_age[iso][bucket][sex]`. Voir `collect_edu_age.py`.
+
+Quand cette base sexuée est utilisée, le facteur `gender_gap` (§3.3) est
+**désactivé** pour éviter un double compte ; `rural_penalty` et `income_prime`
+s'appliquent toujours. Couverture : 21/23 pays (NGA, ETH sans série par âge →
+repli base pays).
 
 ## 2. Base enfant — scolarisation (`child_enrollment`)
 

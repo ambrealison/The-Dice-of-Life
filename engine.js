@@ -245,16 +245,24 @@ const STRATA=[
   apply:(o,st)=>{st.qi=["q1","q2","q3","q4","q5"].indexOf(o);}},
 
  {id:"education",source_ref:()=>DATA.education.source_id,
-  distribution:st=>{const E=DATA.education;
+  distribution:st=>{const E=DATA.education,f=E.factors;
     if(st.ageIdx<=0)return{petite:1};
     if(st.ageIdx===1){const p=E.child_enrollment[st.country].in_school;return{ecole:p,hors:1-p};}
-    let w={...E.attainment_base[st.country].shares};const f=E.factors;
+    // Base par pays x groupe d'âge x sexe (Barro-Lee) si disponible, sinon base pays.
+    // Le résolveur choisit la profondeur selon la forme des données, sans chiffre pays.
+    let w,sexed=false;const BA=E.attainment_by_age;
+    if(BA&&BA[st.country]&&BA[st.country][st.ageId]&&BA[st.country][st.ageId][st.sex]){
+      w={...BA[st.country][st.ageId][st.sex].shares};sexed=true;
+    }else{
+      w={...E.attainment_base[st.country].shares};
+    }
     if(st.rural){for(const k in w)w[k]*=f.rural_penalty[k];}
     w.superieur*=f.income_prime.superieur[st.qi];
     w.aucune*=f.income_prime.aucune[st.qi];
     w.secondaire*=f.income_prime.secondaire[st.qi];
-    const gg=f.gender_gap[st.country];
-    if(gg&&st.sex==="F"){w.aucune*=gg.aucune;w.superieur*=gg.superieur;w.secondaire*=gg.secondaire;}
+    // gender_gap seulement si la base n'est pas déjà sexuée (sinon double compte).
+    if(!sexed){const gg=f.gender_gap[st.country];
+      if(gg&&st.sex==="F"){w.aucune*=gg.aucune;w.superieur*=gg.superieur;w.secondaire*=gg.secondaire;}}
     return w;},
   reveal:o=>({word:T().edu_word[o],cap:T().edu_cap[o]||"",chip:[T().cat.education,T().edu_chip[o]]}),
   apply:(o,st)=>{st.edu=o;}},

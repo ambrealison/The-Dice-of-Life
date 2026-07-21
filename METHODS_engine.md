@@ -5,20 +5,25 @@ complète, en gardant la logique **pilotée par la forme des données**, sans é
 aucun chiffre pays dans le code. Ce document décrit les deux, et leur **statut**
 pour le lot 1 (preuve de bout en bout : IND, CHN, USA).
 
-## Généralisation 1 — Éducation : base par pays × groupe d'âge × sexe
+## Généralisation 1 — Éducation : base par pays × groupe d'âge × sexe ✅ ACTIVÉE
 
-- **Aujourd'hui (lot 1)** : le résolveur `education` lit une base **par pays**,
-  `DATA.education.attainment_base[iso].shares` (comme le seed). Suffisant et
-  cohérent avec les données WDI collectées (attainment 25+ par pays).
-- **Généralisation prévue** : base `attainment_base[iso][adult_age_group][sex]`.
-  Le résolveur sélectionnerait la base selon l'âge et le sexe tirés, avec repli
-  sur la base pays si une case manque. La forme des données commande : si la
-  valeur est un objet à sous-clés d'âge/sexe, on descend ; sinon on lit la base
-  pays. Aucune donnée pays dans le code.
-- **Déclencheur d'activation** : disposer de la base **Barro-Lee brute** (par
-  pays × groupe d'âge 15-19…75+ × sexe × 4 niveaux). Barro-Lee est aujourd'hui
-  inaccessible en direct (certificat cassé sur barrolee.com) ; à récupérer via un
-  miroir OWID avant d'activer.
+- **Statut** : activée. Le résolveur `education` lit d'abord
+  `DATA.education.attainment_by_age[iso][ageId][sex].shares` si présent, sinon
+  se rabat sur la base pays `attainment_base[iso].shares`. La forme des données
+  commande la profondeur ; aucun chiffre pays n'est écrit dans le code.
+- **Source** : Barro-Lee 2010 par groupe d'âge et sexe, redistribué par World
+  Bank EdStats (indicateurs `BAR.NOED/PRM.ICMP/SEC.ICMP/TER.ICMP.<age>[.FE].ZS`),
+  agrégé vers les 6 buckets adultes pondéré population. Le masculin est
+  reconstitué par pondération (WDI ne fournit que total + féminin). Détail :
+  `collect_edu_age.py` et `METHODS_education.md`.
+- **Effet** : corrige le ressenti « Chine tout en primaire ». Ex. Chine 20-34 :
+  secondaire passe de ~24 % (base 25+) à ~82 % ; Chine 65-79 F : sans école
+  ~39 % (cohortes âgées moins scolarisées) ; Inde 20-34 F : secondaire ~44 %.
+- **Compatibilité facteurs** : quand la base sexuée est utilisée, le facteur
+  `gender_gap` est **désactivé** (le sexe est déjà dans la base, sinon double
+  compte) ; `rural_penalty` et `income_prime` continuent de s'appliquer.
+- **Couverture** : 21/23 pays du domaine. NGA et ETH n'ont pas de série
+  Barro-Lee par âge dans WDI → repli sur la base pays (attainment_base).
 
 ## Généralisation 2 — Famille : distributions résolues par pays × âge × sexe
 
