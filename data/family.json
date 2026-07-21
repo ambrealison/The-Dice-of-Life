@@ -36,5 +36,150 @@
     },
     "early_cel_mult": 0.55,
     "early_par_mult": 1.3
+  },
+  "nuptiality": {
+    "sigma": 5.0,
+    "cap": 0.94,
+    "note": "Part célibataire par âge = 1 - cap/(1+exp(-(age-SMAM)/sigma)). SMAM national par sexe (WDI SP.DYN.SMAM). Veuvage et parentalité restent sur le modèle documenté (repli), voir METHODS_family.md."
+  },
+  "smam": {
+    "IND": {
+      "F": 21.4,
+      "M": 26.0,
+      "coverage": "national",
+      "year": 2016
+    },
+    "CHN": {
+      "F": 25.4,
+      "M": 27.1,
+      "coverage": "national",
+      "year": 2016
+    },
+    "USA": {
+      "F": 27.5,
+      "M": 29.2,
+      "coverage": "national",
+      "year": 2010
+    },
+    "IDN": {
+      "F": 22.4,
+      "M": 27.1,
+      "coverage": "national",
+      "year": 2017
+    },
+    "PAK": {
+      "F": 23.2,
+      "M": 26.9,
+      "coverage": "national",
+      "year": 2017
+    },
+    "NGA": {
+      "F": 21.2,
+      "M": 28.6,
+      "coverage": "national",
+      "year": 2013
+    },
+    "BRA": {
+      "F": 23.9,
+      "M": 26.8,
+      "coverage": "national",
+      "year": 2010
+    },
+    "BGD": {
+      "F": 18.8,
+      "M": 25.2,
+      "coverage": "national",
+      "year": 2014
+    },
+    "RUS": {
+      "F": 24.4,
+      "M": 27.0,
+      "coverage": "national",
+      "year": 2010
+    },
+    "ETH": {
+      "F": 21.3,
+      "M": 25.8,
+      "coverage": "national",
+      "year": 2016
+    },
+    "MEX": {
+      "F": 23.2,
+      "M": 25.9,
+      "coverage": "national",
+      "year": 2019
+    },
+    "JPN": {
+      "F": 29.2,
+      "M": 30.5,
+      "coverage": "national",
+      "year": 2015
+    },
+    "EGY": {
+      "F": 22.3,
+      "M": 28.1,
+      "coverage": "national",
+      "year": 2017
+    },
+    "PHL": {
+      "F": 23.4,
+      "M": 27.1,
+      "coverage": "national",
+      "year": 2017
+    },
+    "COD": {
+      "F": 20.9,
+      "M": 25.5,
+      "coverage": "national",
+      "year": 2014
+    },
+    "VNM": {
+      "F": 22.8,
+      "M": 26.9,
+      "coverage": "national",
+      "year": 2015
+    },
+    "IRN": {
+      "F": 23.1,
+      "M": 27.5,
+      "coverage": "national",
+      "year": 2016
+    },
+    "TUR": {
+      "F": 23.4,
+      "M": 27.9,
+      "coverage": "national",
+      "year": 2013
+    },
+    "DEU": {
+      "F": 31.7,
+      "M": 33.9,
+      "coverage": "national",
+      "year": 2018
+    },
+    "THA": {
+      "F": 22.5,
+      "M": 28.5,
+      "coverage": "national",
+      "year": 2012
+    },
+    "FRA": {
+      "F": 32.0,
+      "M": 33.7,
+      "coverage": "national",
+      "year": 2013
+    },
+    "NER": {
+      "F": 17.2,
+      "M": 24.0,
+      "coverage": "national",
+      "year": 2015
+    },
+    "AUT": {
+      "F": 27.1,
+      "M": 29.8,
+      "coverage": "national",
+      "year": 2011
+    }
   }
 }

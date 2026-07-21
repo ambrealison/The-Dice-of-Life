@@ -279,12 +279,24 @@ const STRATA=[
  {id:"famille",source_ref:()=>DATA.family.source_id,
   distribution:st=>{const F=DATA.family,P=F.params,early=F.early_parenthood.includes(st.country);
     if(st.ageIdx<=1)return{enfant:1};
-    if(st.ageIdx===2)return early?{...P.young_early}:{...P.young_late};
-    if(st.ageIdx>=6){const vf=P.elder_widow[st.sex];return{veuf:vf,couple:1-vf-0.08,celibataire:0.08};}
-    let cel=P.mid_celibataire[st.ageId]||0.2,par=P.mid_parent[st.ageId]||0.4;
-    if(early){cel*=P.early_cel_mult;par*=P.early_par_mult;}
-    let cou=1-cel-par;if(cou<0.05)cou=0.05;
-    return{celibataire:cel,couple:cou,parent:par};},
+    // part célibataire nationale via SMAM (âge médian au mariage, par sexe) + modèle
+    // de nuptialité figé ; sinon paramètres globaux. Veuvage/parentalité : modèle documenté.
+    const S=F.smam&&F.smam[st.country];let celN=null;
+    if(S&&F.nuptiality){const m=S[st.sex],nu=F.nuptiality;
+      const pEver=nu.cap/(1+Math.exp(-(st.age-m)/nu.sigma));celN=clamp(1-pEver,0.02,0.98);}
+    if(st.ageIdx===2){const cel=celN!=null?celN:(early?P.young_early.celibataire:P.young_late.celibataire);
+      return{celibataire:cel,couple:1-cel};}
+    if(st.ageIdx>=6){const vf=P.elder_widow[st.sex],cel=celN!=null?clamp(celN,0.02,0.15):0.08;
+      return{veuf:vf,couple:Math.max(1-vf-cel,0.02),celibataire:cel};}
+    const cel=celN!=null?celN:(P.mid_celibataire[st.ageId]||0.2);
+    // parentalité vue comme part PARMI les personnes en couple (échelle avec le
+    // taux de mise en couple national) : évite d'écraser "couple" quand le
+    // célibat est élevé. pr dérivé des paramètres, sans chiffre pays.
+    const baseCel=P.mid_celibataire[st.ageId]||0.2;
+    let pr=(P.mid_parent[st.ageId]||0.4)/Math.max(1-baseCel,0.1);
+    if(early)pr*=P.early_par_mult;pr=clamp(pr,0,0.95);
+    const partnered=Math.max(1-cel,0.02);
+    return{celibataire:cel,couple:partnered*(1-pr),parent:partnered*pr};},
   reveal:(o,st)=>{const w=o==="veuf"?T().famille_veuf(st.sex):T().famille_word[o];
     return{word:w,cap:"",chip:[T().cat.famille,w]};},
   apply:(o,st)=>{st.family=o;}},

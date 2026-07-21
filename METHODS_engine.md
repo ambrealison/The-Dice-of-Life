@@ -25,20 +25,24 @@ pour le lot 1 (preuve de bout en bout : IND, CHN, USA).
 - **Couverture** : 21/23 pays du domaine. NGA et ETH n'ont pas de série
   Barro-Lee par âge dans WDI → repli sur la base pays (attainment_base).
 
-## Généralisation 2 — Famille : distributions résolues par pays × âge × sexe
+## Généralisation 2 — Famille : distributions résolues par pays × âge × sexe ◑ PARTIELLE
 
-- **Aujourd'hui (lot 1)** : le résolveur `famille` lit des **paramètres globaux**
-  (`DATA.family.params` : `young_early/late`, `elder_widow`, `mid_celibataire`,
-  `mid_parent`, multiplicateurs `early_*`) plus la liste `early_parenthood`.
-  C'est le modèle du seed, conservé faute d'accès aux distributions nationales.
-- **Généralisation prévue** : distribution résolue `family[iso][age][sex]` sur
-  les buckets famille, avec `parent_share` séparé, et repli sur les branches
-  enfant / jeune / âgé si une case manque. Le résolveur lirait la distribution du
-  pays pour l'âge et le sexe tirés.
-- **Déclencheur d'activation** : disposer du **statut matrimonial par pays × âge
-  × sexe** (ONU DESA World Marriage Data). Cette source est actuellement bloquée
-  par la politique d'egress (`un.org` → 403). À récupérer via un miroir OWID ou
-  la hiérarchie de repli avant d'activer.
+- **Statut** : partiellement activée. Le résolveur `famille` résout désormais la
+  part **célibataire ↔ couple** nationalement, par pays et par sexe, à partir du
+  **SMAM** (âge médian au mariage, WDI `SP.DYN.SMAM`) et d'un modèle de nuptialité
+  figé (`family.smam`, `family.nuptiality`). La **parentalité** s'échelonne avec
+  le taux de mise en couple national ; le **veuvage** reste sur le paramètre
+  documenté `elder_widow` (repli régional/mondial). Détail : `collect_family.py`,
+  `METHODS_family.md`.
+- **Data-driven** : le résolveur lit `family.smam[iso][sex]` si présent, sinon les
+  paramètres globaux ; aucun chiffre pays dans le code.
+- **Effet** : capture l'écart d'âge au mariage hommes/femmes (Inde 20-34 :
+  célibataire 48 % H vs 29 % F) et le mariage tardif (USA 20-34 F : 55 % célib).
+- **Reste à activer (statut complet)** : la distribution complète (jamais marié /
+  marié-union / veuf / divorcé) par pays × âge × sexe de World Marriage Data est
+  gated (`un.org` 403 ; UN Data Portal données 401 ; pas de miroir OWID). Avec un
+  **jeton UN Data Portal** (gratuit) ou le déblocage `un.org`, on nationalise
+  aussi veuvage et parentalité — distributions `family[iso][age][sex]` complètes.
 
 ## Principe conservé
 

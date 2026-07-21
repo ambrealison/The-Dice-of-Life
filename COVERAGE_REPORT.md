@@ -18,11 +18,13 @@ mondial), marquée en conséquence.
 | age_sex (2) — âge×sexe | 20 | — | WDI `SP.POP.<bande>.<FE\|MA>` (wpp) |
 | settlement (3) — grande/ville/rural | 20 | — | WDI `SP.URB.TOTL.IN.ZS` + `EN.URB.MCTY.TL.ZS` (wup) |
 | income (4) — percentile mondial | 20 | — | PIP déciles + `income_world_ref.json` (pip) |
-| education (5) — base adulte | 20 | — | WDI attainment 25+ (barrolee/uis) |
+| education (5) — base adulte pays | 20 | — | WDI attainment 25+ (barrolee/uis) |
+| education (5) — base **par âge × sexe** | 21/23 | NGA, ETH → repli base pays | Barro-Lee par âge (WDI EdStats) |
 | education (5) — scolarisation enfant | 18 | **CHN** régional, **COD** income_group | WDI `SE.PRM.UNER.ZS` (repli `SE.PRM.NENR`) |
 | living (8) — électricité/internet/eau | 20 | — | WDI `EG.ELC.ACCS.ZS`, `IT.NET.USER.ZS`, `SH.H2O.*` (wdi/jmp) |
 | health (6) — sévérité + mental | — | **20 × income_group** | modèle groupé GBD (`METHODS_health.md`) |
-| family (7) — situation familiale | — | **20 × regional/world** | paramètres globaux (`METHODS_engine.md`) |
+| family (7) — célibataire ↔ couple | **23 (SMAM)** | — | WDI `SP.DYN.SMAM.FE/MA` + modèle nuptialité |
+| family (7) — veuvage / parentalité | — | regional/world | modèle documenté (`METHODS_family.md`) |
 
 ### Détail des replis (top 20)
 
