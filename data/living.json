@@ -1,0 +1,50 @@
+{
+  "table": "living",
+  "source_id": "wdi",
+  "year": 2023,
+  "rural_penalty": 0.75,
+  "data": {
+    "FRA": {
+      "electricite": 1.0,
+      "internet": 0.93,
+      "eau": 1.0,
+      "coverage": "national"
+    },
+    "AUT": {
+      "electricite": 1.0,
+      "internet": 0.9,
+      "eau": 1.0,
+      "coverage": "national"
+    },
+    "USA": {
+      "electricite": 1.0,
+      "internet": 0.92,
+      "eau": 0.99,
+      "coverage": "national"
+    },
+    "BRA": {
+      "electricite": 1.0,
+      "internet": 0.84,
+      "eau": 0.98,
+      "coverage": "national"
+    },
+    "IND": {
+      "electricite": 0.99,
+      "internet": 0.55,
+      "eau": 0.93,
+      "coverage": "national"
+    },
+    "CHN": {
+      "electricite": 1.0,
+      "internet": 0.78,
+      "eau": 0.97,
+      "coverage": "national"
+    },
+    "NER": {
+      "electricite": 0.2,
+      "internet": 0.2,
+      "eau": 0.56,
+      "coverage": "national"
+    }
+  }
+}

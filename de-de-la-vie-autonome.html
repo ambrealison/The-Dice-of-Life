@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le Dé de la Vie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Patrick+Hand&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#17151F;
+    --cream:#FFF7EA;
+    --paper:#FFFDF7;
+    --shadow:6px 6px 0 var(--ink);
+    --shadow-sm:4px 4px 0 var(--ink);
+    --disp:"Bricolage Grotesque",system-ui,"Segoe UI",sans-serif;
+    --hand:"Patrick Hand","Comic Sans MS",cursive;
+    --body:"Nunito",system-ui,sans-serif;
+    /* couleurs de scène */
+    --c-intro:#3B6BFF; --c-pays:#3B6BFF; --c-agesexe:#FF6B5E; --c-milieu:#12B5A0;
+    --c-revenu:#FFB020; --c-education:#8B5CF6; --c-sante:#FF6FA5; --c-famille:#FF8A3C;
+    --c-detail:#59C24A; --c-final:#6C4BD8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--body);color:var(--ink);background:var(--c-intro);overflow:hidden;-webkit-font-smoothing:antialiased}
+
+  #stage{position:relative;height:100%;width:100%;transition:background-color .5s ease}
+  .screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:clamp(16px,4vw,40px);opacity:0;pointer-events:none;transition:none}
+  .screen.active{opacity:1;pointer-events:auto}
+
+  /* petites décos dessinées de fond */
+  .doodle-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;opacity:.5}
+  .doodle-bg svg{position:absolute;stroke:rgba(23,21,31,.35);fill:none;stroke-width:4;stroke-linecap:round}
+
+  /* ---------- INTRO ---------- */
+  .kicker{font-family:var(--hand);font-size:clamp(18px,3vw,24px);color:var(--cream);transform:rotate(-3deg);margin-bottom:6px}
+  .logo{font-family:var(--disp);font-weight:800;color:var(--cream);text-align:center;line-height:.92;
+    font-size:clamp(52px,13vw,150px);letter-spacing:-.02em;text-shadow:5px 5px 0 var(--ink);z-index:1}
+  .tagline{font-family:var(--disp);font-weight:600;color:var(--ink);background:var(--cream);border:3px solid var(--ink);
+    box-shadow:var(--shadow);border-radius:18px;padding:14px 22px;margin-top:26px;max-width:30ch;text-align:center;
+    font-size:clamp(15px,2.3vw,20px);z-index:1;transform:rotate(-1deg)}
+  .earth-btn{position:relative;margin:min(5vh,40px) 0 8px;cursor:pointer;z-index:1;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+  .earth-btn:hover{transform:scale(1.06) rotate(4deg)}
+  .earth-btn:active{transform:scale(.96)}
+  .earth-btn svg{display:block;width:clamp(150px,34vw,220px);height:auto;filter:drop-shadow(6px 6px 0 var(--ink))}
+  .scrawl{font-family:var(--hand);font-size:clamp(18px,3vw,26px);color:var(--cream);transform:rotate(-4deg);z-index:1;
+    animation:wobble 2.2s ease-in-out infinite}
+  .big-btn{font-family:var(--disp);font-weight:800;font-size:clamp(16px,2.4vw,21px);color:var(--ink);background:var(--cream);
+    border:3px solid var(--ink);border-radius:16px;padding:16px 34px;cursor:pointer;box-shadow:var(--shadow);z-index:1;
+    transition:transform .12s ease,box-shadow .12s ease}
+  .big-btn:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink)}
+  .big-btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+
+  /* ---------- HUD ---------- */
+  .hud{position:absolute;top:0;left:0;right:0;z-index:6;display:flex;justify-content:space-between;align-items:flex-start;
+    padding:clamp(12px,2.6vw,22px);pointer-events:none}
+  .chip-hud{background:var(--cream);border:3px solid var(--ink);border-radius:14px;box-shadow:var(--shadow-sm);
+    padding:8px 14px;transform:rotate(-2deg)}
+  .chip-hud.r{transform:rotate(2deg);text-align:right}
+  .chip-hud .l{font-family:var(--hand);font-size:12px;color:#6b6780;line-height:1}
+  .chip-hud .n{font-family:var(--disp);font-weight:800;font-size:clamp(15px,2.6vw,22px);line-height:1.1;font-variant-numeric:tabular-nums}
+
+  /* ---------- PLAY ---------- */
+  .play{display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:560px;z-index:1}
+  .step-tag{font-family:var(--hand);font-size:clamp(17px,2.6vw,22px);color:var(--cream);margin-bottom:10px;transform:rotate(-1.5deg)}
+  .card{background:var(--paper);border:3px solid var(--ink);border-radius:26px;box-shadow:var(--shadow);
+    padding:clamp(22px,4vw,34px) clamp(20px,4vw,36px);width:100%;position:relative}
+  .ico{width:clamp(84px,17vw,120px);height:auto;display:block;margin:0 auto}
+  .ico path,.ico circle,.ico ellipse,.ico rect,.ico line{stroke:var(--ink);stroke-width:5.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .ico .fill{fill:var(--ink);stroke:none}
+
+  .die-wrap{margin:18px auto 6px;display:flex;flex-direction:column;align-items:center;gap:12px}
+  .die{width:clamp(76px,15vw,96px);height:clamp(76px,15vw,96px);background:var(--cream);border:3px solid var(--ink);
+    border-radius:20px;box-shadow:var(--shadow);cursor:pointer;display:grid;grid-template-columns:repeat(3,1fr);
+    grid-template-rows:repeat(3,1fr);place-items:center;padding:14px;transition:transform .15s cubic-bezier(.3,1.6,.5,1)}
+  .die:hover{transform:rotate(-6deg) scale(1.04)}
+  .die:active{transform:scale(.94)}
+  .die.rolling{animation:roll .5s ease-in-out}
+  .die .pip{width:clamp(11px,2.4vw,15px);height:clamp(11px,2.4vw,15px);background:var(--ink);border-radius:50%;opacity:0}
+  .die .pip.on{opacity:1}
+  .die-hint{font-family:var(--hand);font-size:clamp(16px,2.4vw,20px);color:var(--ink);opacity:.8}
+
+  .result{font-family:var(--disp);font-weight:800;font-size:clamp(30px,6.5vw,58px);line-height:1.02;margin-top:6px;
+    letter-spacing:-.01em;opacity:0;transform:scale(.7);min-height:1.1em}
+  .result.pop{animation:pop .5s cubic-bezier(.2,1.5,.4,1) forwards}
+  .caption{font-family:var(--hand);font-size:clamp(17px,2.8vw,23px);color:#5a566e;margin-top:8px;min-height:1.4em;opacity:0;transition:opacity .3s ease .2s}
+  .caption.in{opacity:1}
+  .src-btn{margin-top:16px;font-family:var(--body);font-weight:700;font-size:11px;color:#8a8699;background:none;border:none;
+    cursor:pointer;text-decoration:underline dotted;display:none}
+  .src-btn:hover{color:var(--ink)}
+
+  .next-btn{font-family:var(--disp);font-weight:800;font-size:clamp(15px,2.2vw,19px);color:var(--cream);background:var(--ink);
+    border:3px solid var(--ink);border-radius:16px;padding:13px 30px;cursor:pointer;box-shadow:4px 4px 0 rgba(0,0,0,.25);
+    margin-top:22px;opacity:0;transform:translateY(10px);pointer-events:none;transition:all .3s cubic-bezier(.2,1.4,.4,1)}
+  .next-btn.show{opacity:1;transform:none;pointer-events:auto}
+  .next-btn:hover{transform:translate(-2px,-2px)}
+  .next-btn:active{transform:translate(2px,2px)}
+
+  /* chips récap en bas */
+  .chips{position:absolute;bottom:0;left:0;right:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
+    padding:clamp(12px,2.6vw,20px)}
+  .chip{background:var(--cream);border:2.5px solid var(--ink);border-radius:999px;padding:6px 13px;font-family:var(--disp);
+    font-weight:700;font-size:clamp(12px,1.8vw,14px);box-shadow:2px 2px 0 var(--ink);cursor:pointer;
+    opacity:0;transform:scale(.6) rotate(-4deg);transition:all .35s cubic-bezier(.2,1.5,.4,1)}
+  .chip.in{opacity:1;transform:none}
+  .chip:nth-child(even){transform:rotate(2deg)}
+  .chip.in:nth-child(even){transform:none}
+  .chip:hover{background:#fff}
+
+  /* ---------- FINAL ---------- */
+  .final{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:560px;z-index:1;width:100%}
+  .final-title{font-family:var(--hand);font-size:clamp(20px,3.4vw,28px);color:var(--cream);margin-bottom:14px;transform:rotate(-2deg)}
+  .persona-card{background:var(--paper);border:3px solid var(--ink);border-radius:26px;box-shadow:var(--shadow);
+    padding:clamp(22px,4vw,32px);width:100%;position:relative}
+  .stamp{position:absolute;top:-14px;right:-10px;background:var(--c-agesexe);color:var(--cream);border:3px solid var(--ink);
+    border-radius:12px;padding:6px 12px;font-family:var(--disp);font-weight:800;font-size:12px;transform:rotate(8deg);
+    box-shadow:var(--shadow-sm);line-height:1.1;text-align:center}
+  .avatar{width:clamp(90px,20vw,120px);height:auto;margin:0 auto 4px}
+  .persona-line{font-family:var(--disp);font-weight:700;font-size:clamp(19px,3.4vw,26px);line-height:1.3;margin-top:6px}
+  .persona-line .hl{color:#e04a6b}
+  .persona-day{font-family:var(--body);font-weight:600;font-size:clamp(13px,2vw,15px);color:#5a566e;margin-top:10px;line-height:1.5}
+  .final-chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:16px}
+  .final-chips .chip{opacity:1;transform:none;cursor:pointer}
+  .question{font-family:var(--disp);font-weight:800;font-size:clamp(22px,4.4vw,36px);color:var(--cream);margin:26px 0 4px;
+    text-shadow:3px 3px 0 var(--ink);line-height:1.1}
+  .answer-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+  .ans{font-family:var(--disp);font-weight:800;font-size:clamp(15px,2.2vw,19px);border:3px solid var(--ink);border-radius:16px;
+    padding:14px 28px;cursor:pointer;box-shadow:var(--shadow);transition:all .12s ease}
+  .ans:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink)}
+  .ans:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+  .ans.no{background:var(--cream);color:var(--ink)}
+  .ans.yes{background:var(--ink);color:var(--cream)}
+  .after{font-family:var(--hand);font-size:clamp(18px,3vw,26px);color:var(--cream);min-height:1.4em;margin-top:18px;opacity:0;transition:opacity .4s ease}
+  .replay{margin-top:10px;opacity:0;transform:translateY(8px);pointer-events:none;transition:all .35s cubic-bezier(.2,1.4,.4,1)}
+  .replay.show{opacity:1;transform:none;pointer-events:auto}
+
+  /* ---------- LOADING FLASH ---------- */
+  #flash{position:absolute;inset:0;z-index:15;display:flex;align-items:center;justify-content:center;background:var(--ink);
+    opacity:0;pointer-events:none;transition:opacity .18s ease;padding:24px}
+  #flash.on{opacity:1}
+  #flash .ff{font-family:var(--disp);font-weight:700;color:var(--cream);text-align:center;font-size:clamp(20px,4vw,34px);
+    max-width:20ch;line-height:1.2}
+  #flash .ff b{color:#FFB020}
+  #flash .ffs{font-family:var(--hand);color:#9c98b5;font-size:14px;margin-top:14px}
+
+  /* ---------- MODAL ---------- */
+  .modal{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;padding:22px;
+    background:rgba(23,21,31,.55);opacity:0;pointer-events:none;transition:opacity .25s ease}
+  .modal.open{opacity:1;pointer-events:auto}
+  .modal .m{background:var(--paper);border:3px solid var(--ink);border-radius:22px;box-shadow:8px 8px 0 var(--ink);
+    max-width:430px;width:100%;padding:clamp(22px,4vw,32px);transform:translateY(14px) rotate(-1deg);transition:transform .25s cubic-bezier(.2,1.4,.4,1)}
+  .modal.open .m{transform:none}
+  .m-k{font-family:var(--hand);font-size:18px;color:#e04a6b;margin-bottom:6px}
+  .m-t{font-family:var(--disp);font-weight:800;font-size:clamp(20px,3.4vw,26px);line-height:1.15;margin-bottom:10px}
+  .m-b{font-family:var(--body);font-weight:600;font-size:14px;color:#5a566e;line-height:1.5}
+  .drow{display:flex;align-items:center;gap:10px;margin:9px 0}
+  .drow .dn{font-family:var(--disp);font-weight:700;font-size:13px;width:110px;flex:none}
+  .drow .db{height:12px;background:#eee6d6;border:2px solid var(--ink);border-radius:8px;flex:1;overflow:hidden}
+  .drow .db i{display:block;height:100%;background:var(--c-revenu)}
+  .drow .dp{font-family:var(--disp);font-weight:700;font-size:12px;width:44px;text-align:right;flex:none}
+  .drow.pick .dn{color:#e04a6b}
+  .drow.pick .db i{background:#e04a6b}
+  .m-src{font-family:var(--hand);font-size:14px;color:#8a8699;margin-top:16px}
+  .m-close{margin-top:20px;width:100%;font-family:var(--disp);font-weight:800;font-size:16px;background:var(--ink);color:var(--cream);
+    border:3px solid var(--ink);border-radius:14px;padding:12px;cursor:pointer}
+
+  .confetti{position:absolute;width:12px;height:12px;z-index:20;pointer-events:none;border:2px solid var(--ink)}
+
+  @keyframes wobble{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(2deg) translateY(-4px)}}
+  @keyframes roll{0%{transform:rotate(0)}25%{transform:rotate(-14deg) scale(1.06)}50%{transform:rotate(16deg) scale(.96)}75%{transform:rotate(-8deg)}100%{transform:rotate(0)}}
+  @keyframes pop{to{opacity:1;transform:scale(1)}}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+
+  @media (max-width:560px){ .chips{position:static;margin-top:16px} .persona-day{max-width:100%} }
+  @media (prefers-reduced-motion:reduce){ *{animation-duration:.001s!important;transition-duration:.1s!important} .scrawl{animation:none} }
+</style>
+</head>
+<body>
+<div id="stage" style="background:var(--c-intro)">
+
+  <!-- INTRO -->
+  <section class="screen active" id="s-intro">
+    <div class="kicker">un jeu de hasard grandeur nature</div>
+    <h1 class="logo">Le Dé<br>de la Vie</h1>
+    <div class="tagline">8 milliards de vies. Le dé en tire une au sort. Ça aurait pu être la tienne.</div>
+    <div class="earth-btn" id="earthBtn" aria-label="Lancer">
+      <svg viewBox="0 0 120 120"><g>
+        <circle cx="60" cy="60" r="46" fill="#12B5A0" stroke="#17151F" stroke-width="5"/>
+        <path d="M34 40 q10 6 6 16 q-6 8 4 14 q8 4 2 14" fill="#59C24A" stroke="#17151F" stroke-width="4"/>
+        <path d="M74 34 q12 4 10 16 q-2 8 6 12" fill="#59C24A" stroke="#17151F" stroke-width="4"/>
+        <path d="M70 78 q10 2 14 -6" fill="#59C24A" stroke="#17151F" stroke-width="4"/>
+        <ellipse cx="60" cy="60" rx="20" ry="46" fill="none" stroke="#17151F" stroke-width="3.5" opacity=".55"/>
+        <path d="M15 58 H105" stroke="#17151F" stroke-width="3.5" opacity=".55" fill="none"/>
+      </g></svg>
+    </div>
+    <div class="scrawl">clique la Terre &darr;</div>
+    <button class="big-btn" id="startBtn" style="margin-top:14px">Lancer le dé</button>
+  </section>
+
+  <!-- PLAY -->
+  <section class="screen" id="s-play">
+    <div class="hud">
+      <div class="chip-hud"><div class="l">vies tirées</div><div class="n" id="soulN">0</div></div>
+      <div class="chip-hud r"><div class="l">des gens comme ça</div><div class="n" id="countN">8 000 000 000</div></div>
+    </div>
+
+    <div class="play">
+      <div class="step-tag" id="stepTag">étape 1 · le pays</div>
+      <div class="card">
+        <div class="ico" id="ico"></div>
+        <div class="die-wrap" id="dieWrap">
+          <div class="die" id="die"></div>
+          <div class="die-hint" id="dieHint">clique le dé pour tirer</div>
+        </div>
+        <div class="result" id="result"></div>
+        <div class="caption" id="caption"></div>
+        <button class="src-btn" id="srcBtn">voir les probas</button>
+      </div>
+      <button class="next-btn" id="nextBtn">Continuer &rarr;</button>
+    </div>
+
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <!-- FINAL -->
+  <section class="screen" id="s-final">
+    <div class="final">
+      <div class="final-title">le dé a parlé. voici ta nouvelle vie :</div>
+      <div class="persona-card">
+        <div class="stamp" id="stamp">1<br>/ 8 000 000 000</div>
+        <div class="avatar" id="avatar"></div>
+        <div class="persona-line" id="personaLine"></div>
+        <div class="persona-day" id="personaDay"></div>
+        <div class="final-chips" id="finalChips"></div>
+      </div>
+      <div class="question">Tu échanges ta vie contre la sienne ?</div>
+      <div class="answer-row" id="answerRow">
+        <button class="ans no" id="ansNo">Non merci</button>
+        <button class="ans yes" id="ansYes">Carrément</button>
+      </div>
+      <div class="after" id="after"></div>
+      <div class="replay" id="replayRow"><button class="big-btn" id="replayBtn">Relancer le dé</button></div>
+    </div>
+  </section>
+
+  <!-- FLASH (chargement rapide) -->
+  <div id="flash"><div><div class="ff" id="flashFact"></div><div class="ffs" id="flashSrc"></div></div></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal"><div class="m">
+  <div class="m-k" id="mK">les probas</div>
+  <div class="m-t" id="mT"></div>
+  <div class="m-b" id="mB"></div>
+  <div id="mDist"></div>
+  <div class="m-src" id="mSrc"></div>
+  <button class="m-close" id="mClose">OK</button>
+</div></div>
+
+<script>window.__SEED__={"countries": {"table": "countries", "source_id": "wpp", "year": 2024, "rows": [{"iso3": "FRA", "name_fr": "France", "name_en": "France", "region": "Europe de l'Ouest", "income_group": "high", "population": 66000000, "prep": "en", "coverage": "national"}, {"iso3": "AUT", "name_fr": "Autriche", "name_en": "Austria", "region": "Europe centrale", "income_group": "high", "population": 9100000, "prep": "en", "coverage": "national"}, {"iso3": "USA", "name_fr": "Etats-Unis", "name_en": "United States", "region": "Amerique du Nord", "income_group": "high", "population": 345000000, "prep": "aux", "coverage": "national"}, {"iso3": "BRA", "name_fr": "Bresil", "name_en": "Brazil", "region": "Amerique du Sud", "income_group": "upper_middle", "population": 212000000, "prep": "au", "coverage": "national"}, {"iso3": "IND", "name_fr": "Inde", "name_en": "India", "region": "Asie du Sud", "income_group": "lower_middle", "population": 1450000000, "prep": "en", "coverage": "national"}, {"iso3": "CHN", "name_fr": "Chine", "name_en": "China", "region": "Asie de l'Est", "income_group": "upper_middle", "population": 1410000000, "prep": "en", "coverage": "national"}, {"iso3": "NER", "name_fr": "Niger", "name_en": "Niger", "region": "Afrique de l'Ouest", "income_group": "low", "population": 27000000, "prep": "au", "coverage": "national"}]}, "age_sex": {"table": "age_sex", "source_id": "wpp", "year": 2024, "data": {"FRA": {"shares": {"a00_04|F": 0.02435, "a00_04|M": 0.02565, "a05_14|F": 0.056005, "a05_14|M": 0.058995, "a15_19|F": 0.02922, "a15_19|M": 0.03078, "a20_34|F": 0.0891, "a20_34|M": 0.0909, "a35_49|F": 0.09287, "a35_49|M": 0.09213, "a50_64|F": 0.09785, "a50_64|M": 0.09215, "a65_79|F": 0.0777, "a65_79|M": 0.0623, "a80p|F": 0.0504, "a80p|M": 0.0296}, "coverage": "national"}, "AUT": {"shares": {"a00_04|F": 0.021915, "a00_04|M": 0.023085, "a05_14|F": 0.0487, "a05_14|M": 0.0513, "a15_19|F": 0.026785, "a15_19|M": 0.028215, "a20_34|F": 0.091575, "a20_34|M": 0.093425, "a35_49|F": 0.1004, "a35_49|M": 0.0996, "a50_64|F": 0.103, "a50_64|M": 0.097, "a65_79|F": 0.080475, "a65_79|M": 0.064525, "a80p|F": 0.0441, "a80p|M": 0.0259}, "coverage": "national"}, "USA": {"shares": {"a00_04|F": 0.026785, "a00_04|M": 0.028215, "a05_14|F": 0.05844, "a05_14|M": 0.06156, "a15_19|F": 0.031655, "a15_19|M": 0.033345, "a20_34|F": 0.099, "a20_34|M": 0.101, "a35_49|F": 0.09538, "a35_49|M": 0.09462, "a50_64|F": 0.09785, "a50_64|M": 0.09215, "a65_79|F": 0.07215, "a65_79|M": 0.05785, "a80p|F": 0.0315, "a80p|M": 0.0185}, "coverage": "national"}, "BRA": {"shares": {"a00_04|F": 0.02922, "a00_04|M": 0.03078, "a05_14|F": 0.06818, "a05_14|M": 0.07182, "a15_19|F": 0.03896, "a15_19|M": 0.04104, "a20_34|F": 0.1188, "a20_34|M": 0.1212, "a35_49|F": 0.10542, "a35_49|M": 0.10458, "a50_64|F": 0.0824, "a50_64|M": 0.0776, "a65_79|F": 0.0444, "a65_79|M": 0.0356, "a80p|F": 0.0189, "a80p|M": 0.0111}, "coverage": "national"}, "IND": {"shares": {"a00_04|F": 0.03696, "a00_04|M": 0.04304, "a05_14|F": 0.07854, "a05_14|M": 0.09146, "a15_19|F": 0.04158, "a15_19|M": 0.04842, "a20_34|F": 0.1222, "a20_34|M": 0.1378, "a35_49|F": 0.0954, "a35_49|M": 0.1046, "a50_64|F": 0.0588, "a50_64|M": 0.0612, "a65_79|F": 0.0318, "a65_79|M": 0.0282, "a80p|F": 0.0121, "a80p|M": 0.0079}, "coverage": "national"}, "CHN": {"shares": {"a00_04|F": 0.02285, "a00_04|M": 0.02715, "a05_14|F": 0.05027, "a05_14|M": 0.05973, "a15_19|F": 0.02742, "a15_19|M": 0.03258, "a20_34|F": 0.09765, "a20_34|M": 0.11235, "a35_49|F": 0.10384, "a35_49|M": 0.11616, "a50_64|F": 0.097, "a50_64|M": 0.103, "a65_79|F": 0.05775, "a65_79|M": 0.05225, "a80p|F": 0.024, "a80p|M": 0.016}, "coverage": "national"}, "NER": {"shares": {"a00_04|F": 0.08766, "a00_04|M": 0.09234, "a05_14|F": 0.1461, "a05_14|M": 0.1539, "a15_19|F": 0.05357, "a15_19|M": 0.05643, "a20_34|F": 0.1089, "a20_34|M": 0.1111, "a35_49|F": 0.05522, "a35_49|M": 0.05478, "a50_64|F": 0.028325, "a50_64|M": 0.026675, "a65_79|F": 0.0111, "a65_79|M": 0.0089, "a80p|F": 0.00315, "a80p|M": 0.00185}, "coverage": "national"}}}, "settlement": {"table": "settlement", "source_id": "wup", "year": 2024, "data": {"FRA": {"shares": {"grande": 0.3, "ville": 0.51, "rural": 0.19}, "coverage": "national"}, "AUT": {"shares": {"grande": 0.28, "ville": 0.31, "rural": 0.41}, "coverage": "national"}, "USA": {"shares": {"grande": 0.45, "ville": 0.38, "rural": 0.17}, "coverage": "national"}, "BRA": {"shares": {"grande": 0.45, "ville": 0.42, "rural": 0.13}, "coverage": "national"}, "IND": {"shares": {"grande": 0.15, "ville": 0.21, "rural": 0.64}, "coverage": "national"}, "CHN": {"shares": {"grande": 0.35, "ville": 0.29, "rural": 0.36}, "coverage": "national"}, "NER": {"shares": {"grande": 0.05, "ville": 0.12, "rural": 0.83}, "coverage": "national"}}}, "income": {"table": "income", "source_id": "pip", "year": 2024, "data": {"FRA": {"global_percentile": [58, 72, 83, 90, 96], "coverage": "national"}, "AUT": {"global_percentile": [60, 74, 84, 91, 97], "coverage": "national"}, "USA": {"global_percentile": [55, 72, 84, 92, 98], "coverage": "national"}, "BRA": {"global_percentile": [25, 40, 55, 70, 88], "coverage": "national"}, "IND": {"global_percentile": [18, 30, 42, 55, 72], "coverage": "national"}, "CHN": {"global_percentile": [30, 45, 58, 72, 88], "coverage": "national"}, "NER": {"global_percentile": [4, 8, 13, 20, 34], "coverage": "national"}}}, "education": {"table": "education", "source_id": "barrolee", "year": 2020, "attainment_base": {"FRA": {"shares": {"aucune": 0.03, "primaire": 0.11, "secondaire": 0.44, "superieur": 0.42}, "coverage": "national"}, "AUT": {"shares": {"aucune": 0.02, "primaire": 0.1, "secondaire": 0.55, "superieur": 0.33}, "coverage": "national"}, "USA": {"shares": {"aucune": 0.02, "primaire": 0.06, "secondaire": 0.45, "superieur": 0.47}, "coverage": "national"}, "BRA": {"shares": {"aucune": 0.08, "primaire": 0.28, "secondaire": 0.44, "superieur": 0.2}, "coverage": "national"}, "IND": {"shares": {"aucune": 0.22, "primaire": 0.24, "secondaire": 0.36, "superieur": 0.18}, "coverage": "national"}, "CHN": {"shares": {"aucune": 0.08, "primaire": 0.22, "secondaire": 0.48, "superieur": 0.22}, "coverage": "national"}, "NER": {"shares": {"aucune": 0.63, "primaire": 0.22, "secondaire": 0.11, "superieur": 0.04}, "coverage": "national"}}, "child_enrollment": {"FRA": {"in_school": 0.99}, "AUT": {"in_school": 0.99}, "USA": {"in_school": 0.99}, "BRA": {"in_school": 0.96}, "IND": {"in_school": 0.9}, "CHN": {"in_school": 0.98}, "NER": {"in_school": 0.55}}, "factors": {"rural_penalty": {"aucune": 1.6, "primaire": 1.15, "secondaire": 0.7, "superieur": 0.45}, "income_prime": {"superieur": [0.4, 0.7, 1.0, 1.4, 1.9], "aucune": [1.9, 1.35, 1.0, 0.7, 0.45], "secondaire": [0.7, 0.85, 1.0, 1.15, 1.3]}, "gender_gap": {"IND": {"aucune": 1.5, "superieur": 0.65, "secondaire": 0.85}, "NER": {"aucune": 1.5, "superieur": 0.65, "secondaire": 0.85}}}}, "health": {"table": "health", "source_id": "gbd", "year": 2023, "country_group": {"FRA": "rich", "AUT": "rich", "USA": "rich", "BRA": "mid", "IND": "mid", "CHN": "mid", "NER": "low"}, "severity_base_group": {"rich": {"bonne": 0.62, "gene_legere": 0.24, "incap_moderee": 0.1, "incap_severe": 0.04}, "mid": {"bonne": 0.55, "gene_legere": 0.27, "incap_moderee": 0.13, "incap_severe": 0.05}, "low": {"bonne": 0.48, "gene_legere": 0.29, "incap_moderee": 0.16, "incap_severe": 0.07}}, "age_factors": {"boost": [0.6, 0.5, 0.6, 0.8, 1.0, 1.5, 2.4, 3.5], "good": [1.2, 1.25, 1.25, 1.15, 1.0, 0.8, 0.55, 0.4]}, "income_penalty": [1.4, 1.2, 1.0, 0.85, 0.7], "mental": {"base": 0.11, "rural_add": 0.01, "lowinc_add": 0.03, "min": 0.06, "max": 0.2}}, "family": {"table": "family", "source_id": "undesa_marriage", "year": 2023, "early_parenthood": ["IND", "NER"], "params": {"young_early": {"celibataire": 0.6, "couple": 0.4}, "young_late": {"celibataire": 0.85, "couple": 0.15}, "elder_widow": {"F": 0.55, "M": 0.28}, "mid_celibataire": {"a20_34": 0.35, "a35_49": 0.18, "a50_64": 0.14}, "mid_parent": {"a20_34": 0.4, "a35_49": 0.55, "a50_64": 0.5}, "early_cel_mult": 0.55, "early_par_mult": 1.3}}, "living": {"table": "living", "source_id": "wdi", "year": 2023, "rural_penalty": 0.75, "data": {"FRA": {"electricite": 1.0, "internet": 0.93, "eau": 1.0, "coverage": "national"}, "AUT": {"electricite": 1.0, "internet": 0.9, "eau": 1.0, "coverage": "national"}, "USA": {"electricite": 1.0, "internet": 0.92, "eau": 0.99, "coverage": "national"}, "BRA": {"electricite": 1.0, "internet": 0.84, "eau": 0.98, "coverage": "national"}, "IND": {"electricite": 0.99, "internet": 0.55, "eau": 0.93, "coverage": "national"}, "CHN": {"electricite": 1.0, "internet": 0.78, "eau": 0.97, "coverage": "national"}, "NER": {"electricite": 0.2, "internet": 0.2, "eau": 0.56, "coverage": "national"}}}};</script>
+<script>
+/* =========================================================================
+   LE DÉ DE LA VIE — moteur data-driven
+   Aucune donnée pays n'est écrite ici. Tout vient de DATA, chargé depuis
+   /data/*.json (si l'app est servie) ou du seed embarqué window.__SEED__
+   (fallback pour l'aperçu en fichier local). Ajouter un pays = ajouter des
+   lignes de données, jamais toucher ce code.
+   ========================================================================= */
+
+const WORLD_POP = 8_000_000_000;
+let DATA = null, CTY = {};
+
+/* ---- métadonnées de dimensions (UI, pas de la donnée pays) ---- */
+const AGES = ["a00_04","a05_14","a15_19","a20_34","a35_49","a50_64","a65_79","a80p"];
+const AGE_MID = {a00_04:2,a05_14:10,a15_19:17,a20_34:27,a35_49:42,a50_64:57,a65_79:72,a80p:86};
+const SCENE = {pays:"--c-pays",agesexe:"--c-agesexe",milieu:"--c-milieu",revenu:"--c-revenu",education:"--c-education",sante:"--c-sante",famille:"--c-famille",detail:"--c-detail"};
+
+const ICONS={
+  pays:`<svg class="ico" viewBox="0 0 120 120"><circle cx="60" cy="60" r="42"/><ellipse cx="60" cy="60" rx="18" ry="42"/><path d="M20 50 H100"/><path d="M18 72 H102"/><path d="M40 30 q20 10 40 0"/></svg>`,
+  agesexe:`<svg class="ico" viewBox="0 0 120 120"><circle cx="60" cy="38" r="17"/><path d="M32 96 q0-30 28-30 q28 0 28 30"/><path d="M60 12 v8"/></svg>`,
+  milieu:`<svg class="ico" viewBox="0 0 120 120"><path d="M22 60 L48 38 L74 60"/><path d="M28 58 V94 H68 V58"/><rect x="42" y="74" width="14" height="20"/><path d="M78 94 V52 H98 V94"/><path d="M84 60 h8 M84 72 h8"/></svg>`,
+  revenu:`<svg class="ico" viewBox="0 0 120 120"><ellipse cx="60" cy="40" rx="30" ry="12"/><path d="M30 40 V74 q0 12 30 12 q30 0 30-12 V40"/><path d="M30 57 q0 12 30 12 q30 0 30-12"/></svg>`,
+  education:`<svg class="ico" viewBox="0 0 120 120"><path d="M60 40 q-22-12-40-6 V90 q20-6 40 6 q20-12 40-6 V34 q-18-6-40 6 Z"/><path d="M60 40 V92"/></svg>`,
+  sante:`<svg class="ico" viewBox="0 0 120 120"><path d="M60 92 C22 66 26 34 46 34 q14 0 14 16 q0-16 14-16 c20 0 24 32 -14 58 Z"/><path d="M30 60 H46 L52 48 L60 74 L66 60 H92" stroke-width="4"/></svg>`,
+  famille:`<svg class="ico" viewBox="0 0 120 120"><circle cx="40" cy="42" r="13"/><path d="M20 92 q0-24 20-24 q20 0 20 24"/><circle cx="80" cy="42" r="13"/><path d="M60 92 q0-24 20-24 q20 0 20 24"/><circle cx="60" cy="66" r="8"/><path d="M48 96 q0-14 12-14 q12 0 12 14"/></svg>`,
+  detail:`<svg class="ico" viewBox="0 0 120 120"><circle cx="60" cy="50" r="22"/><path d="M50 74 H70 M53 82 H67"/><path d="M60 20 V12 M86 50 H94 M26 50 H34 M80 30 l6-6 M40 30 l-6-6"/></svg>`
+};
+const AVATAR=`<svg class="ico avatar" viewBox="0 0 120 120"><circle cx="60" cy="42" r="26"/><circle cx="51" cy="42" r="3.5" class="fill"/><circle cx="69" cy="42" r="3.5" class="fill"/><path d="M50 52 q10 8 20 0"/><path d="M30 110 q0-40 30-40 q30 0 30 40"/></svg>`;
+
+/* ---- helpers ---- */
+const $=s=>document.querySelector(s);
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const fmt=n=>Math.round(n).toLocaleString("fr-FR").replace(/\u202f/g," ");
+const norm=o=>{const t=Object.values(o).reduce((a,b)=>a+b,0)||1;const r={};for(const k in o)r[k]=o[k]/t;return r;};
+function pick(d){const n=norm(d);let r=Math.random(),a=0;for(const k in n){a+=n[k];if(r<=a)return k;}return Object.keys(n).pop();}
+const REDUCED=matchMedia("(prefers-reduced-motion:reduce)").matches;
+const wait=ms=>new Promise(r=>setTimeout(r,REDUCED?Math.min(ms,100):ms));
+const ageIdx=id=>AGES.indexOf(id);
+
+/* ================= STRATES (logique universelle, chiffres depuis DATA) ================= */
+const STRATA=[
+ {id:"pays",label:"le pays",source_ref:()=>DATA.countries.source_id,
+  distribution:()=>{const d={};DATA.countries.rows.forEach(r=>d[r.iso3]=r.population);return d;},
+  reveal:o=>({word:CTY[o].name_fr,cap:"direction "+CTY[o].name_fr+" !",chip:["pays",CTY[o].name_fr]}),
+  apply:(o,st)=>{st.country=o;}},
+
+ {id:"agesexe",label:"l'âge & le sexe",source_ref:()=>DATA.age_sex.source_id,
+  distribution:st=>({...DATA.age_sex.data[st.country].shares}),
+  reveal:o=>{const[a,s]=o.split("|"),i=ageIdx(a),yr=AGE_MID[a],child=i<=1;
+    const word=child?(s==="F"?"Une fille":"Un garçon"):(s==="F"?"Une femme":"Un homme");
+    return{word,cap:yr+" ans, on démarre",chip:["âge",(s==="F"?"F":"H")+", "+yr+" ans"]};},
+  apply:(o,st)=>{const[a,s]=o.split("|");st.ageId=a;st.ageIdx=ageIdx(a);st.age=AGE_MID[a];st.sex=s;}},
+
+ {id:"milieu",label:"le décor",source_ref:()=>DATA.settlement.source_id,
+  distribution:st=>({...DATA.settlement.data[st.country].shares}),
+  reveal:o=>{const w={grande:"La grande ville",ville:"Une ville",rural:"La campagne"}[o];
+    const c={grande:"lumières et béton",ville:"peinard, taille moyenne",rural:"grand air, loin du bruit"}[o];
+    return{word:w,cap:c,chip:["décor",{grande:"Grande ville",ville:"Ville",rural:"Campagne"}[o]]};},
+  apply:(o,st)=>{st.rural=o==="rural";st.milieu=o;}},
+
+ {id:"revenu",label:"le portefeuille",source_ref:()=>DATA.income.source_id,
+  distribution:()=>({q1:.2,q2:.2,q3:.2,q4:.2,q5:.2}),
+  reveal:(o,st)=>{const qi=["q1","q2","q3","q4","q5"].indexOf(o);
+    const lbl=["Serré","Modeste","Au milieu","Confortable","Peinard"][qi];
+    const top=100-DATA.income.data[st.country].global_percentile[qi];
+    return{word:lbl,cap:"soit le top "+top+" % mondial, à peu près",chip:["argent",lbl]};},
+  apply:(o,st)=>{st.qi=["q1","q2","q3","q4","q5"].indexOf(o);}},
+
+ {id:"education",label:"les études",source_ref:()=>DATA.education.source_id,
+  distribution:st=>{const E=DATA.education;
+    if(st.ageIdx<=0)return{petite:1};
+    if(st.ageIdx===1){const p=E.child_enrollment[st.country].in_school;return{ecole:p,hors:1-p};}
+    let w={...E.attainment_base[st.country].shares};const f=E.factors;
+    if(st.rural){for(const k in w)w[k]*=f.rural_penalty[k];}
+    w.superieur*=f.income_prime.superieur[st.qi];
+    w.aucune*=f.income_prime.aucune[st.qi];
+    w.secondaire*=f.income_prime.secondaire[st.qi];
+    const gg=f.gender_gap[st.country];
+    if(gg&&st.sex==="F"){w.aucune*=gg.aucune;w.superieur*=gg.superieur;w.secondaire*=gg.secondaire;}
+    return w;},
+  reveal:o=>{const m={petite:"Trop petit pour l'école",ecole:"À l'école",hors:"Pas scolarisé",
+    aucune:"Pas allé à l'école",primaire:"Niveau primaire",secondaire:"Niveau lycée",superieur:"Études supérieures"};
+    const c={superieur:"diplôme dans la poche",secondaire:"bac en vue",ecole:"cartable sur le dos"}[o]||"";
+    const p={petite:"Petite enfance",ecole:"Scolarisé",hors:"Non scolarisé",aucune:"Sans école",primaire:"Primaire",secondaire:"Lycée",superieur:"Supérieur"};
+    return{word:m[o],cap:c,chip:["études",p[o]]};},
+  apply:(o,st)=>{st.edu=o;}},
+
+ {id:"sante",label:"la santé",source_ref:()=>DATA.health.source_id,
+  distribution:st=>{const H=DATA.health;let w={...H.severity_base_group[H.country_group[st.country]]};
+    const i=st.ageIdx,ab=H.age_factors.boost[i],ga=H.age_factors.good[i],li=H.income_penalty[st.qi];
+    w.bonne*=ga;w.incap_moderee*=ab*li;w.incap_severe*=ab*li;w.gene_legere*=(0.9+0.05*i);return w;},
+  reveal:(o,st)=>{const H=DATA.health,m=H.mental;
+    const mp=clamp(m.base+(st.rural?m.rural_add:0)+(st.qi<=1?m.lowinc_add:0),m.min,m.max);st.mental=Math.random()<mp;
+    const map={bonne:"En pleine forme",gene_legere:"Une gêne légère",incap_moderee:"Une incapacité modérée",incap_severe:"Une incapacité sévère"};
+    return{word:map[o],cap:o==="bonne"?"la grande forme":"",chip:["santé",map[o]]};},
+  apply:(o,st)=>{st.health=o;}},
+
+ {id:"famille",label:"la tribu",source_ref:()=>DATA.family.source_id,
+  distribution:st=>{const F=DATA.family,P=F.params,early=F.early_parenthood.includes(st.country);
+    if(st.ageIdx<=1)return{enfant:1};
+    if(st.ageIdx===2)return early?{...P.young_early}:{...P.young_late};
+    if(st.ageIdx>=6){const vf=P.elder_widow[st.sex];return{veuf:vf,couple:1-vf-0.08,celibataire:0.08};}
+    let cel=P.mid_celibataire[st.ageId]||0.2,par=P.mid_parent[st.ageId]||0.4;
+    if(early){cel*=P.early_cel_mult;par*=P.early_par_mult;}
+    let cou=1-cel-par;if(cou<0.05)cou=0.05;
+    return{celibataire:cel,couple:cou,parent:par};},
+  reveal:(o,st)=>{const m={enfant:"Chez ses parents",celibataire:"Célibataire",couple:"En couple",parent:"Déjà parent",veuf:st.sex==="F"?"Veuve":"Veuf"};
+    return{word:m[o],cap:"",chip:["tribu",m[o]]};},
+  apply:(o,st)=>{st.family=o;}},
+
+ {id:"detail",label:"le bonus",source_ref:()=>DATA.living.source_id,
+  distribution:()=>({a:1}),
+  reveal:(o,st)=>{const L=DATA.living,d=L.data[st.country],rp=st.rural?L.rural_penalty:1;
+    const fs=[{h:Math.random()<clamp(d.electricite*rp,0,1),y:"L'électricité à la maison",n:"Pas d'électricité fiable"},
+             {h:Math.random()<clamp(d.internet*rp,0,1),y:"Connecté à internet",n:"Pas d'internet"},
+             {h:Math.random()<clamp(d.eau*rp,0,1),y:"L'eau potable au robinet",n:"Pas d'eau potable sûre"}];
+    const miss=fs.find(f=>!f.h),f=miss||fs[0];const txt=f.h?f.y:f.n;
+    return{word:txt,cap:"",chip:["bonus",txt]};},
+  apply:()=>{}}
+];
+
+/* labels de source lisibles (depuis le manifeste embarqué) */
+const SRC_LABEL={wpp:"ONU · WPP 2024",wup:"ONU · WUP 2025",pip:"Banque mondiale · PIP",
+  barrolee:"Barro-Lee · UNESCO",gbd:"IHME · GBD 2023",undesa_marriage:"ONU DESA · Marriage Data",wdi:"Banque mondiale · WDI"};
+
+/* ================= état & flux (clic par étape) ================= */
+let state,remaining,soul=0,i=0,curDist=null,curOutcome=null,rolled=false,distLog={};
+function resetState(){state={};remaining=WORLD_POP;i=0;distLog={};$("#chips").innerHTML="";$("#countN").textContent=fmt(WORLD_POP);}
+
+function startPlay(){
+  const eb=$("#earthBtn");eb.style.transition="transform .6s cubic-bezier(.5,0,.3,1),opacity .6s";
+  eb.style.transform="scale(2.6) rotate(20deg)";eb.style.opacity="0";
+  setTimeout(()=>{resetState();show("s-play");renderStep();},REDUCED?100:520);
+}
+function renderStep(){
+  const s=STRATA[i];rolled=false;curOutcome=null;
+  document.getElementById("stage").style.background="var("+SCENE[s.id]+")";
+  $("#stepTag").textContent="étape "+(i+1)+" · "+s.label;
+  $("#ico").outerHTML=ICONS[s.id].replace('class="ico"','class="ico" id="ico"');
+  $("#result").textContent="";$("#result").className="result";
+  $("#caption").textContent="";$("#caption").className="caption";
+  $("#srcBtn").style.display="none";$("#nextBtn").classList.remove("show");
+  $("#dieWrap").style.display="flex";$("#dieHint").textContent="clique le dé pour tirer";$("#dieHint").style.visibility="visible";
+  buildDie(Math.ceil(Math.random()*6));
+}
+function buildDie(face){const L={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
+  const on=new Set(L[face]);let h="";for(let k=0;k<9;k++)h+='<div class="pip'+(on.has(k)?" on":"")+'"></div>';$("#die").innerHTML=h;}
+
+async function rollDie(){
+  if(rolled)return;rolled=true;const s=STRATA[i];
+  curDist=s.distribution(state);distLog[s.id]={dist:curDist,source:SRC_LABEL[s.source_ref()]||s.source_ref(),label:s.label};
+  curOutcome=pick(curDist);const share=norm(curDist)[curOutcome];
+  const die=$("#die");$("#dieHint").style.visibility="hidden";
+  const spins=REDUCED?1:6;
+  for(let c=0;c<spins;c++){die.classList.remove("rolling");void die.offsetWidth;die.classList.add("rolling");buildDie(Math.ceil(Math.random()*6));await wait(90);}
+  die.classList.remove("rolling");
+  const r=s.reveal(curOutcome,state);s.apply(curOutcome,state);
+  distLog[s.id].chip=r.chip;distLog[s.id].picked=curOutcome;
+  const prev=remaining;remaining=(s.id==="pays")?CTY[curOutcome].population:remaining*share;
+  animateCount(prev,Math.max(remaining,1));
+  $("#dieWrap").style.display="none";
+  const res=$("#result");res.textContent=r.word;res.classList.add("pop");
+  const cap=$("#caption");cap.textContent=r.cap||"";if(r.cap)requestAnimationFrame(()=>cap.classList.add("in"));
+  const sb=$("#srcBtn");sb.style.display="inline";sb.onclick=()=>openDist(s.id,curOutcome);
+  addChip(s.id,r.chip);
+  await wait(REDUCED?80:280);$("#nextBtn").classList.add("show");
+}
+function nextStep(){i++;if(i>=STRATA.length){toFinal();return;}renderStep();}
+function animateCount(from,to){const el=$("#countN"),dur=REDUCED?150:820,t0=performance.now();
+  (function step(t){const p=clamp((t-t0)/dur,0,1),e=1-Math.pow(1-p,3),v=from+(to-from)*e;
+    el.textContent=v<1000?Math.max(1,Math.round(v)):fmt(v);if(p<1)requestAnimationFrame(step);})(t0);}
+function addChip(id,chip){const c=document.createElement("div");c.className="chip";c.textContent=chip[1];
+  c.onclick=()=>openDist(id,null);$("#chips").appendChild(c);requestAnimationFrame(()=>requestAnimationFrame(()=>c.classList.add("in")));}
+
+function toFinal(){
+  show("s-final");soul++;$("#soulN").textContent=soul;
+  document.getElementById("stage").style.background="var(--c-final)";
+  $("#avatar").outerHTML=AVATAR.replace('class="ico avatar"','class="ico avatar" id="avatar"');
+  const C=CTY[state.country],child=state.ageIdx<=1;
+  const who=child?(state.sex==="F"?"Une enfant":"Un enfant"):(state.sex==="F"?"Une femme":"Un homme");
+  const mil={grande:"dans une grande ville",ville:"dans une ville",rural:"à la campagne"}[state.milieu];
+  $("#personaLine").innerHTML=`<span class="hl">${who}</span>, ${state.age} ans, ${mil} ${C.prep} ${C.name_fr}.`;
+  const edu={petite:"pas encore l'école",ecole:"à l'école",hors:"non scolarisé",aucune:"sans école",primaire:"niveau primaire",secondaire:"niveau lycée",superieur:"diplômé du supérieur"}[state.edu];
+  const fam={enfant:"chez ses parents",celibataire:"célibataire",couple:"en couple",parent:"parent",veuf:state.sex==="F"?"veuve":"veuf"}[state.family];
+  const sante={bonne:"en pleine forme",gene_legere:"une gêne légère",incap_moderee:"une incapacité modérée",incap_severe:"une incapacité sévère"}[state.health];
+  $("#personaDay").textContent=`${cap(edu)}. ${cap(fam)}. ${cap(sante)}${state.mental?", et un trouble de santé mentale":""}.`;
+  const fc=$("#finalChips");fc.innerHTML="";
+  Object.keys(distLog).forEach(id=>{const val=distLog[id].chip&&distLog[id].chip[1];if(!val)return;
+    const el=document.createElement("div");el.className="chip";el.textContent=val;el.onclick=()=>openDist(id,null);fc.appendChild(el);});
+  $("#answerRow").style.display="flex";$("#after").style.opacity="0";$("#replayRow").classList.remove("show");
+  if(!REDUCED)confetti();
+}
+function cap(s){return s?s[0].toUpperCase()+s.slice(1):s;}
+function answer(swap){$("#answerRow").style.display="none";
+  $("#after").textContent=swap?"audacieux.":"noté. tu gardes la tienne.";$("#after").style.opacity="1";
+  setTimeout(()=>$("#replayRow").classList.add("show"),600);}
+
+function openDist(id,picked){const e=distLog[id];if(!e)return;const n=norm(e.dist),s=STRATA.find(x=>x.id===id);
+  const hi=picked||e.picked||null;
+  const rows=Object.keys(n).map(k=>{let l;try{l=s.reveal(k,{...state}).chip[1];}catch(_){l=k;}return{k,l,p:n[k]};}).sort((a,b)=>b.p-a.p);
+  $("#mK").textContent="les probas";$("#mT").textContent=e.label;
+  $("#mB").textContent="ce que le dé pouvait sortir, d'après les vraies données, dans cette situation.";
+  const host=$("#mDist");host.innerHTML="";
+  rows.forEach(r=>{const el=document.createElement("div");el.className="drow"+(hi&&r.k===hi?" pick":"");
+    el.innerHTML=`<span class="dn">${r.l}</span><span class="db"><i style="width:${(r.p*100).toFixed(1)}%"></i></span><span class="dp">${(r.p*100).toFixed(0)}%</span>`;host.appendChild(el);});
+  $("#mSrc").textContent="source · "+e.source;$("#modal").classList.add("open");}
+function closeModal(){$("#modal").classList.remove("open");}
+
+function confetti(){const cols=["#3B6BFF","#FF6B5E","#FFB020","#12B5A0","#8B5CF6","#FF6FA5"];
+  for(let k=0;k<26;k++){const d=document.createElement("div");d.className="confetti";
+    d.style.left=(20+Math.random()*60)+"%";d.style.top="30%";d.style.background=cols[k%cols.length];
+    d.style.transform=`rotate(${Math.random()*360}deg)`;d.style.borderRadius=Math.random()<.5?"50%":"2px";
+    document.getElementById("stage").appendChild(d);
+    d.animate([{transform:d.style.transform,opacity:1},{transform:`translate(${(Math.random()-.5)*260}px,${300+Math.random()*260}px) rotate(${Math.random()*720}deg)`,opacity:0}],
+      {duration:1100+Math.random()*700,easing:"cubic-bezier(.2,.6,.4,1)"}).onfinish=()=>d.remove();}}
+
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));$("#"+id).classList.add("active");}
+
+/* ================= chargement des données ================= */
+async function loadData(){
+  const names=["countries","age_sex","settlement","income","education","health","family","living"];
+  try{
+    const out={};
+    for(const n of names){const r=await fetch("data/"+n+".json",{cache:"no-store"});if(!r.ok)throw new Error(n);out[n]=await r.json();}
+    console.info("[Dé de la Vie] données chargées depuis /data");
+    return out;
+  }catch(e){
+    if(window.__SEED__){console.info("[Dé de la Vie] /data indisponible, seed embarqué utilisé");return window.__SEED__;}
+    throw e;
+  }
+}
+function buildIndexes(){CTY={};DATA.countries.rows.forEach(r=>CTY[r.iso3]=r);}
+
+function wire(){
+  $("#earthBtn").addEventListener("click",startPlay);
+  $("#startBtn").addEventListener("click",startPlay);
+  $("#nextBtn").addEventListener("click",nextStep);
+  $("#ansNo").addEventListener("click",()=>answer(false));
+  $("#ansYes").addEventListener("click",()=>answer(true));
+  $("#replayBtn").addEventListener("click",()=>{const eb=$("#earthBtn");eb.style.transition="none";eb.style.transform="scale(1)";eb.style.opacity="1";document.getElementById("stage").style.background="var(--c-intro)";show("s-intro");});
+  $("#mClose").addEventListener("click",closeModal);
+  $("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal();});
+  addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
+  $("#s-play").addEventListener("click",e=>{if(e.target.closest("#die"))rollDie();});
+}
+
+(async function init(){
+  try{ DATA=await loadData(); buildIndexes(); wire(); }
+  catch(e){ document.body.innerHTML='<div style="font-family:sans-serif;padding:40px;color:#fff">Données introuvables. Sers le dossier avec un serveur, ou ouvre le fichier autonome.</div>'; console.error(e); }
+})();
+
+</script>
+</body>
+</html>

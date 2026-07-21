@@ -1,0 +1,35 @@
+{
+  "table": "family",
+  "source_id": "undesa_marriage",
+  "year": 2023,
+  "early_parenthood": [
+    "IND",
+    "NER"
+  ],
+  "params": {
+    "young_early": {
+      "celibataire": 0.6,
+      "couple": 0.4
+    },
+    "young_late": {
+      "celibataire": 0.85,
+      "couple": 0.15
+    },
+    "elder_widow": {
+      "F": 0.55,
+      "M": 0.28
+    },
+    "mid_celibataire": {
+      "a20_34": 0.35,
+      "a35_49": 0.18,
+      "a50_64": 0.14
+    },
+    "mid_parent": {
+      "a20_34": 0.4,
+      "a35_49": 0.55,
+      "a50_64": 0.5
+    },
+    "early_cel_mult": 0.55,
+    "early_par_mult": 1.3
+  }
+}

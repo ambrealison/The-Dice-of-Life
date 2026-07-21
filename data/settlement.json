@@ -1,0 +1,63 @@
+{
+  "table": "settlement",
+  "source_id": "wup",
+  "year": 2024,
+  "data": {
+    "FRA": {
+      "shares": {
+        "grande": 0.3,
+        "ville": 0.51,
+        "rural": 0.19
+      },
+      "coverage": "national"
+    },
+    "AUT": {
+      "shares": {
+        "grande": 0.28,
+        "ville": 0.31,
+        "rural": 0.41
+      },
+      "coverage": "national"
+    },
+    "USA": {
+      "shares": {
+        "grande": 0.45,
+        "ville": 0.38,
+        "rural": 0.17
+      },
+      "coverage": "national"
+    },
+    "BRA": {
+      "shares": {
+        "grande": 0.45,
+        "ville": 0.42,
+        "rural": 0.13
+      },
+      "coverage": "national"
+    },
+    "IND": {
+      "shares": {
+        "grande": 0.15,
+        "ville": 0.21,
+        "rural": 0.64
+      },
+      "coverage": "national"
+    },
+    "CHN": {
+      "shares": {
+        "grande": 0.35,
+        "ville": 0.29,
+        "rural": 0.36
+      },
+      "coverage": "national"
+    },
+    "NER": {
+      "shares": {
+        "grande": 0.05,
+        "ville": 0.12,
+        "rural": 0.83
+      },
+      "coverage": "national"
+    }
+  }
+}

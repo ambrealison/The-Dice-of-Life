@@ -1,0 +1,70 @@
+{
+  "table": "health",
+  "source_id": "gbd",
+  "year": 2023,
+  "country_group": {
+    "FRA": "rich",
+    "AUT": "rich",
+    "USA": "rich",
+    "BRA": "mid",
+    "IND": "mid",
+    "CHN": "mid",
+    "NER": "low"
+  },
+  "severity_base_group": {
+    "rich": {
+      "bonne": 0.62,
+      "gene_legere": 0.24,
+      "incap_moderee": 0.1,
+      "incap_severe": 0.04
+    },
+    "mid": {
+      "bonne": 0.55,
+      "gene_legere": 0.27,
+      "incap_moderee": 0.13,
+      "incap_severe": 0.05
+    },
+    "low": {
+      "bonne": 0.48,
+      "gene_legere": 0.29,
+      "incap_moderee": 0.16,
+      "incap_severe": 0.07
+    }
+  },
+  "age_factors": {
+    "boost": [
+      0.6,
+      0.5,
+      0.6,
+      0.8,
+      1.0,
+      1.5,
+      2.4,
+      3.5
+    ],
+    "good": [
+      1.2,
+      1.25,
+      1.25,
+      1.15,
+      1.0,
+      0.8,
+      0.55,
+      0.4
+    ]
+  },
+  "income_penalty": [
+    1.4,
+    1.2,
+    1.0,
+    0.85,
+    0.7
+  ],
+  "mental": {
+    "base": 0.11,
+    "rural_add": 0.01,
+    "lowinc_add": 0.03,
+    "min": 0.06,
+    "max": 0.2
+  }
+}

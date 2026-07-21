@@ -1,0 +1,77 @@
+{
+  "table": "countries",
+  "source_id": "wpp",
+  "year": 2024,
+  "rows": [
+    {
+      "iso3": "FRA",
+      "name_fr": "France",
+      "name_en": "France",
+      "region": "Europe de l'Ouest",
+      "income_group": "high",
+      "population": 66000000,
+      "prep": "en",
+      "coverage": "national"
+    },
+    {
+      "iso3": "AUT",
+      "name_fr": "Autriche",
+      "name_en": "Austria",
+      "region": "Europe centrale",
+      "income_group": "high",
+      "population": 9100000,
+      "prep": "en",
+      "coverage": "national"
+    },
+    {
+      "iso3": "USA",
+      "name_fr": "Etats-Unis",
+      "name_en": "United States",
+      "region": "Amerique du Nord",
+      "income_group": "high",
+      "population": 345000000,
+      "prep": "aux",
+      "coverage": "national"
+    },
+    {
+      "iso3": "BRA",
+      "name_fr": "Bresil",
+      "name_en": "Brazil",
+      "region": "Amerique du Sud",
+      "income_group": "upper_middle",
+      "population": 212000000,
+      "prep": "au",
+      "coverage": "national"
+    },
+    {
+      "iso3": "IND",
+      "name_fr": "Inde",
+      "name_en": "India",
+      "region": "Asie du Sud",
+      "income_group": "lower_middle",
+      "population": 1450000000,
+      "prep": "en",
+      "coverage": "national"
+    },
+    {
+      "iso3": "CHN",
+      "name_fr": "Chine",
+      "name_en": "China",
+      "region": "Asie de l'Est",
+      "income_group": "upper_middle",
+      "population": 1410000000,
+      "prep": "en",
+      "coverage": "national"
+    },
+    {
+      "iso3": "NER",
+      "name_fr": "Niger",
+      "name_en": "Niger",
+      "region": "Afrique de l'Ouest",
+      "income_group": "low",
+      "population": 27000000,
+      "prep": "au",
+      "coverage": "national"
+    }
+  ]
+}

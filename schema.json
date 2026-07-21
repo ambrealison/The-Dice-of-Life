@@ -1,0 +1,268 @@
+{
+  "schema_version": "1.0",
+  "project": "le-de-de-la-vie",
+  "generated": "2026-07-21",
+  "_purpose": "Contrat de donnees. Decrit chaque table a remplir, ses cles de conditionnement, ses buckets figes, sa source et sa regle de repli. Le moteur de tirage ne lit que des tables conformes a ce schema.",
+
+  "world_population": 8000000000,
+
+  "value_node_contract": {
+    "_note": "Forme minimale de toute feuille de distribution. Chaque valeur transporte sa source, ce qui rend l'affichage des sources gratuit dans l'interface.",
+    "shares": "objet { bucket_id: probabilite }, somme = 1 (tolerance 1e-6)",
+    "source_id": "identifiant present dans sources",
+    "year": "annee de reference de la donnee (entier)",
+    "coverage": "national | regional | income_group | world"
+  },
+
+  "sources": {
+    "wpp":  {"name": "World Population Prospects", "publisher": "ONU DESA, Population Division", "version": "2024", "license": "CC BY 3.0 IGO", "url": "https://population.un.org/wpp/", "api": "https://population.un.org/dataportalapi/", "retrieved": null},
+    "wup":  {"name": "World Urbanization Prospects", "publisher": "ONU DESA, Population Division", "version": "2025", "license": "CC BY 3.0 IGO", "url": "https://population.un.org/dataportal/", "retrieved": null},
+    "pip":  {"name": "Poverty and Inequality Platform (jeu Percentiles)", "publisher": "Banque mondiale", "version": "20260324", "license": "CC0", "url": "https://pip.worldbank.org/", "retrieved": null},
+    "wid":  {"name": "World Inequality Database", "publisher": "World Inequality Lab", "version": null, "license": "Conditions WID", "url": "https://wid.world/", "retrieved": null},
+    "barrolee": {"name": "Educational Attainment Dataset", "publisher": "Barro & Lee", "version": "2020", "license": "Academique, citation requise", "url": "http://www.barrolee.com/", "retrieved": null},
+    "uis":  {"name": "UIS Statistics", "publisher": "UNESCO Institute for Statistics", "version": null, "license": "CC BY", "url": "https://uis.unesco.org/", "retrieved": null},
+    "gbd":  {"name": "Global Burden of Disease", "publisher": "IHME", "version": "2023", "license": "IHME free-use, non commercial", "url": "https://ghdx.healthdata.org/gbd-2023", "retrieved": null},
+    "undesa_marriage": {"name": "World Marriage Data", "publisher": "ONU DESA, Population Division", "version": "2023", "license": "Usage libre avec citation", "url": "https://www.un.org/development/desa/pd/data/world-marriage-data", "retrieved": null},
+    "dhs":  {"name": "Demographic and Health Surveys", "publisher": "DHS Program (USAID)", "version": null, "license": "Acces sur inscription", "url": "https://dhsprogram.com/", "retrieved": null},
+    "wdi":  {"name": "World Development Indicators", "publisher": "Banque mondiale", "version": null, "license": "CC BY 4.0", "url": "https://data.worldbank.org/", "retrieved": null},
+    "jmp":  {"name": "Joint Monitoring Programme (eau, assainissement)", "publisher": "OMS / UNICEF", "version": null, "license": "Usage libre avec citation", "url": "https://washdata.org/", "retrieved": null},
+    "itu":  {"name": "ITU DataHub (internet)", "publisher": "Union internationale des telecommunications", "version": null, "license": "Conditions UIT", "url": "https://datahub.itu.int/", "retrieved": null}
+  },
+
+  "dimensions": {
+    "_note": "Enumerations canoniques et figees. Le dictionnaire partage entre donnees et interface. Ne jamais renommer un id, seulement les libelles.",
+
+    "ages": [
+      {"id": "a00_04", "label_fr": "0 a 4 ans",  "min": 0,  "max": 4,  "mid": 2,  "child": true},
+      {"id": "a05_14", "label_fr": "5 a 14 ans", "min": 5,  "max": 14, "mid": 10, "child": true},
+      {"id": "a15_19", "label_fr": "15 a 19 ans","min": 15, "max": 19, "mid": 17, "child": false},
+      {"id": "a20_34", "label_fr": "20 a 34 ans","min": 20, "max": 34, "mid": 27, "child": false},
+      {"id": "a35_49", "label_fr": "35 a 49 ans","min": 35, "max": 49, "mid": 42, "child": false},
+      {"id": "a50_64", "label_fr": "50 a 64 ans","min": 50, "max": 64, "mid": 57, "child": false},
+      {"id": "a65_79", "label_fr": "65 a 79 ans","min": 65, "max": 79, "mid": 72, "child": false},
+      {"id": "a80p",   "label_fr": "80 ans et plus","min": 80, "max": 120, "mid": 86, "child": false}
+    ],
+
+    "sexes": [
+      {"id": "F", "label_fr": "Femme"},
+      {"id": "M", "label_fr": "Homme"}
+    ],
+
+    "settlement": [
+      {"id": "grande", "label_fr": "Grande ville"},
+      {"id": "ville",  "label_fr": "Ville"},
+      {"id": "rural",  "label_fr": "Campagne"}
+    ],
+
+    "income_quintiles": [
+      {"id": "q1", "label_fr": "Serre",       "within_country_share": 0.2},
+      {"id": "q2", "label_fr": "Modeste",     "within_country_share": 0.2},
+      {"id": "q3", "label_fr": "Au milieu",   "within_country_share": 0.2},
+      {"id": "q4", "label_fr": "Confortable", "within_country_share": 0.2},
+      {"id": "q5", "label_fr": "Peinard",     "within_country_share": 0.2}
+    ],
+
+    "education_adult": [
+      {"id": "aucune",     "label_fr": "Pas allee a l'ecole"},
+      {"id": "primaire",   "label_fr": "Niveau primaire"},
+      {"id": "secondaire", "label_fr": "Niveau lycee"},
+      {"id": "superieur",  "label_fr": "Etudes superieures"}
+    ],
+
+    "education_child": [
+      {"id": "petite", "label_fr": "Trop petit pour l'ecole", "applies_to_ages": ["a00_04"]},
+      {"id": "ecole",  "label_fr": "A l'ecole",               "applies_to_ages": ["a05_14"]},
+      {"id": "hors",   "label_fr": "Non scolarise",           "applies_to_ages": ["a05_14"]}
+    ],
+
+    "health_states": [
+      {"id": "bonne",         "label_fr": "En pleine forme"},
+      {"id": "gene_legere",   "label_fr": "Une gene legere"},
+      {"id": "incap_moderee", "label_fr": "Une incapacite moderee"},
+      {"id": "incap_severe",  "label_fr": "Une incapacite severe"}
+    ],
+
+    "mental": {"_note": "Indicateur binaire tire separement, valeur = probabilite d'un trouble mental ou addictif", "id": "trouble_mental", "label_fr": "Trouble de sante mentale"},
+
+    "family": [
+      {"id": "enfant",      "label_fr": "Chez ses parents", "applies_to_ages": ["a00_04", "a05_14"]},
+      {"id": "celibataire", "label_fr": "Celibataire"},
+      {"id": "couple",      "label_fr": "En couple"},
+      {"id": "parent",      "label_fr": "Deja parent"},
+      {"id": "veuf",        "label_fr": "Veuf ou veuve"}
+    ],
+
+    "living_conditions": [
+      {"id": "electricite",  "label_fr": "Electricite a la maison"},
+      {"id": "internet",     "label_fr": "Connecte a internet"},
+      {"id": "eau",          "label_fr": "Eau potable au robinet"},
+      {"id": "assainissement","label_fr": "Assainissement de base", "optional": true},
+      {"id": "cuisson",      "label_fr": "Cuisson propre",          "optional": true}
+    ]
+  },
+
+  "reference": {
+    "countries": {
+      "file": "countries.json",
+      "domain": "Tous les pays souverains de WPP 2024 (environ 195), a enumerer depuis la source wpp. Territoires optionnels.",
+      "row_schema": {
+        "iso3":        "code ISO 3166-1 alpha-3",
+        "name_fr":     "nom francais",
+        "name_en":     "nom anglais",
+        "region":      "sous-region ONU (sert au repli)",
+        "income_group":"groupe de revenu Banque mondiale (sert au repli)",
+        "population":  "population totale (poids du tirage niveau 1)",
+        "prep":        "preposition FR pour la redaction (en, au, aux)",
+        "year":        "annee de reference population"
+      },
+      "seed_examples": [
+        {"iso3": "FRA", "name_fr": "France",      "name_en": "France",        "region": "Europe de l'Ouest",  "income_group": "high",        "population": 66000000,   "prep": "en",  "year": 2024},
+        {"iso3": "AUT", "name_fr": "Autriche",    "name_en": "Austria",       "region": "Europe centrale",    "income_group": "high",        "population": 9100000,    "prep": "en",  "year": 2024},
+        {"iso3": "USA", "name_fr": "Etats-Unis",  "name_en": "United States", "region": "Amerique du Nord",   "income_group": "high",        "population": 345000000,  "prep": "aux", "year": 2024},
+        {"iso3": "BRA", "name_fr": "Bresil",      "name_en": "Brazil",        "region": "Amerique du Sud",    "income_group": "upper_middle","population": 212000000,  "prep": "au",  "year": 2024},
+        {"iso3": "IND", "name_fr": "Inde",        "name_en": "India",         "region": "Asie du Sud",        "income_group": "lower_middle","population": 1450000000, "prep": "en",  "year": 2024},
+        {"iso3": "CHN", "name_fr": "Chine",       "name_en": "China",         "region": "Asie de l'Est",      "income_group": "upper_middle","population": 1410000000, "prep": "en",  "year": 2024},
+        {"iso3": "NER", "name_fr": "Niger",       "name_en": "Niger",         "region": "Afrique de l'Ouest", "income_group": "low",         "population": 27000000,   "prep": "au",  "year": 2024}
+      ]
+    }
+  },
+
+  "strata": [
+    {
+      "id": "pays", "level": 1, "file": "countries.json",
+      "variable": "pays de naissance",
+      "depends_on": [], "key": [],
+      "value": {"type": "weights", "over": "reference.countries", "field": "population"},
+      "source": "wpp", "coverage_default": "national", "fallback": false,
+      "cells_estimate": 195,
+      "notes": "La part de chaque pays vaut population / world_population. Sert aussi a amorcer le compteur."
+    },
+    {
+      "id": "agesexe", "level": 2, "file": "age_sex.json",
+      "variable": "tranche d'age et sexe",
+      "depends_on": ["pays"], "key": ["iso3"],
+      "value": {"type": "joint_distribution", "dimensions": ["ages", "sexes"]},
+      "source": "wpp", "coverage_default": "national", "fallback": false,
+      "cells_estimate": 3120,
+      "notes": "Vraie jointe. La pyramide des ages d'un pays donne deja P(age, sexe). Source native en tranches de 5 ans, agregee vers les 8 buckets."
+    },
+    {
+      "id": "milieu", "level": 3, "file": "settlement.json",
+      "variable": "milieu de vie",
+      "depends_on": ["pays"], "key": ["iso3"],
+      "value": {"type": "distribution", "over": "settlement"},
+      "source": "wup", "coverage_default": "national", "fallback": "regional",
+      "cells_estimate": 585,
+      "optional_refinement": "cle iso3 x age si le degre d'urbanisation par age est disponible",
+      "notes": "Trois degres d'urbanisation. Repli regional pour les micro-etats sans decoupage."
+    },
+    {
+      "id": "revenu", "level": 4, "file": "income.json",
+      "variable": "niveau de vie",
+      "depends_on": ["pays"], "key": ["iso3"],
+      "value": {
+        "type": "income_position",
+        "quintile_shares": "fixes a 0.2 (voir dimensions.income_quintiles)",
+        "global_percentile": "tableau de 5 valeurs, percentile mondial du milieu de chaque quintile national",
+        "decile_thresholds_ppp": "tableau de 9 seuils en dollars PPA (optionnel mais recommande)"
+      },
+      "global_reference": {"file": "income_world_ref.json", "note": "distribution mondiale du revenu en dollars PPA, pour convertir un quintile national en percentile mondial"},
+      "source": "pip", "source_secondary": "wid", "coverage_default": "national", "fallback": "income_group",
+      "cells_estimate": 1950,
+      "optional_refinement": "cle iso3 x settlement (l'urbain est plus aise)",
+      "notes": "La donnee cle n'est pas la part (20 pourcent par construction) mais le placement mondial. Repli indispensable, beaucoup de pays sans enquete recente. WID complete les hauts revenus peu couverts par PIP."
+    },
+    {
+      "id": "education", "level": 5, "file": "education.json",
+      "variable": "education",
+      "depends_on": ["pays", "agesexe"], "conditioned_by_factors": ["revenu", "milieu"],
+      "value": {
+        "type": "base_plus_factors",
+        "branches": {
+          "a00_04": {"deterministic": "petite"},
+          "a05_14": {"type": "distribution", "over": "education_child", "keyed_by": ["iso3", "sex"], "source_field": "child_enrollment"},
+          "adult":  {"type": "distribution", "over": "education_adult", "keyed_by": ["iso3", "adult_age_group", "sex"], "source_field": "attainment_base"}
+        },
+        "factors": [
+          {"id": "rural_penalty",   "applies_to": "adult", "shape": "multiplicateur par niveau (aucune, primaire, secondaire, superieur)"},
+          {"id": "income_prime",    "applies_to": "adult", "shape": "multiplicateur par quintile"},
+          {"id": "gender_gap",      "applies_to": "adult", "shape": "multiplicateur par pays et sexe, la ou l'ecart existe"}
+        ]
+      },
+      "source": "barrolee", "source_secondary": "uis", "source_factors": "dhs", "coverage_default": "national", "fallback": "regional",
+      "cells_estimate": 9750,
+      "notes": "Base attainment adulte par pays x groupes d'age adultes (6) x sexe x 4 niveaux. Scolarisation enfant par pays x sexe. Facteurs cales sur DHS et MICS (frequentation par quintile de richesse). Apres application des facteurs, renormaliser a 1."
+    },
+    {
+      "id": "sante", "level": 6, "file": "health.json",
+      "variable": "sante fonctionnelle et sante mentale",
+      "depends_on": ["pays", "agesexe"], "conditioned_by_factors": ["revenu"],
+      "value": {
+        "type": "base_plus_factors",
+        "state": {"type": "distribution", "over": "health_states", "keyed_by": ["iso3", "age", "sex"], "source_field": "severity_base"},
+        "mental": {"type": "probability", "keyed_by": ["iso3", "age", "sex"], "source_field": "mental_prevalence"},
+        "factors": [
+          {"id": "income_penalty", "applies_to": "state", "shape": "multiplicateur des etats degrades par quintile"}
+        ]
+      },
+      "source": "gbd", "coverage_default": "national", "fallback": "regional",
+      "cells_estimate": 15600,
+      "method_note": "Les 4 bandes de severite se derivent des YLD et des disability weights du GBD, ce n'est pas une variable prete a l'emploi. Figer une methode de passage YLD vers bandes une fois pour toutes, la documenter, et l'appliquer identiquement a tous les pays.",
+      "notes": "Etat par pays x age (8) x sexe (2) x 4 etats. Prevalence trouble mental par pays x age x sexe. Dignite, on decrit un niveau de limitation, pas une liste de pathologies."
+    },
+    {
+      "id": "famille", "level": 7, "file": "family.json",
+      "variable": "situation familiale",
+      "depends_on": ["pays", "agesexe"], "key": ["iso3", "age", "sex"],
+      "value": {
+        "type": "branched_distribution",
+        "over": "family",
+        "branch_rules": {
+          "child_ages": ["a00_04", "a05_14"],
+          "child_outcome": "enfant",
+          "young_ages": ["a15_19"],
+          "elder_ages": ["a65_79", "a80p"]
+        },
+        "parent_share": {"type": "probability", "keyed_by": ["iso3", "age", "sex"], "note": "part de parents, pour separer parent de couple sans enfant"}
+      },
+      "source": "undesa_marriage", "source_secondary": "dhs", "coverage_default": "national", "fallback": "regional",
+      "cells_estimate": 15600,
+      "notes": "Statut matrimonial par pays x age x sexe. Les femmes agees sont plus souvent veuves. Parentalite plus precoce dans certaines regions."
+    },
+    {
+      "id": "detail", "level": 8, "file": "living.json",
+      "variable": "conditions de vie",
+      "depends_on": ["pays", "milieu"], "key": ["iso3", "settlement"],
+      "value": {"type": "access_probabilities", "over": "living_conditions", "note": "probabilite d'acces pour chaque indicateur, tirage independant, on affiche le plus contrastant"},
+      "source": "wdi", "source_secondary": ["jmp", "itu"], "coverage_default": "national", "fallback": "national",
+      "cells_estimate": 1950,
+      "notes": "Ecart rural urbain fort, d'ou la cle settlement. Indicateurs de base electricite, internet, eau. Assainissement et cuisson optionnels."
+    }
+  ],
+
+  "fallback": {
+    "_note": "Applique table par table. Chaque valeur produite porte son niveau de couverture reel, jamais un chiffre invente.",
+    "order": ["national", "national_annee_proche", "regional", "income_group", "world"],
+    "region_map": "reference.countries.region",
+    "income_group_map": "reference.countries.income_group"
+  },
+
+  "validation": [
+    "Toute distribution somme a 1 (tolerance 1e-6).",
+    "Aucune part negative, aucune part superieure a 1.",
+    "Chaque pays du domaine est present dans chaque table, avec un champ coverage renseigne.",
+    "Toute feuille porte source_id, year, coverage conformes au value_node_contract.",
+    "Coherence croisee, aucun profil aberrant (exemple, superieur en zone rurale extremement pauvre reste possible mais rare, jamais dominant).",
+    "Les ids de buckets utilises existent dans dimensions, aucun id inconnu."
+  ],
+
+  "build_order": [
+    "1. Remplir reference.countries depuis wpp (domaine + population + region + income_group).",
+    "2. Niveaux 1 a 3 (poids, age-sexe, milieu), distributions directes.",
+    "3. Niveau 4 (revenu) avec la table mondiale de reference.",
+    "4. Niveaux 5 a 7 (base plus facteurs), figer les methodes YLD et les facteurs avant de derouler les 195 pays.",
+    "5. Niveau 8 (conditions de vie).",
+    "6. Passe de repli pour combler les trous, marquage coverage.",
+    "7. Validation complete."
+  ]
+}

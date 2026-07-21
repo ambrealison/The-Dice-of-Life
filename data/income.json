@@ -1,0 +1,77 @@
+{
+  "table": "income",
+  "source_id": "pip",
+  "year": 2024,
+  "data": {
+    "FRA": {
+      "global_percentile": [
+        58,
+        72,
+        83,
+        90,
+        96
+      ],
+      "coverage": "national"
+    },
+    "AUT": {
+      "global_percentile": [
+        60,
+        74,
+        84,
+        91,
+        97
+      ],
+      "coverage": "national"
+    },
+    "USA": {
+      "global_percentile": [
+        55,
+        72,
+        84,
+        92,
+        98
+      ],
+      "coverage": "national"
+    },
+    "BRA": {
+      "global_percentile": [
+        25,
+        40,
+        55,
+        70,
+        88
+      ],
+      "coverage": "national"
+    },
+    "IND": {
+      "global_percentile": [
+        18,
+        30,
+        42,
+        55,
+        72
+      ],
+      "coverage": "national"
+    },
+    "CHN": {
+      "global_percentile": [
+        30,
+        45,
+        58,
+        72,
+        88
+      ],
+      "coverage": "national"
+    },
+    "NER": {
+      "global_percentile": [
+        4,
+        8,
+        13,
+        20,
+        34
+      ],
+      "coverage": "national"
+    }
+  }
+}
