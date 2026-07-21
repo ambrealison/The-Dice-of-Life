@@ -18,9 +18,11 @@
     },
     "USA": {
       "electricite": 1.0,
-      "internet": 0.92,
-      "eau": 0.99,
-      "coverage": "national"
+      "internet": 0.9469,
+      "eau": 0.9757,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.SMDW.ZS"
     },
     "BRA": {
       "electricite": 1.0,
@@ -29,16 +31,20 @@
       "coverage": "national"
     },
     "IND": {
-      "electricite": 0.99,
-      "internet": 0.55,
-      "eau": 0.93,
-      "coverage": "national"
+      "electricite": 0.999,
+      "internet": 0.6494,
+      "eau": 0.7644,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.SMDW.ZS"
     },
     "CHN": {
       "electricite": 1.0,
-      "internet": 0.78,
-      "eau": 0.97,
-      "coverage": "national"
+      "internet": 0.92,
+      "eau": 0.9612,
+      "coverage": "national",
+      "year": 2024,
+      "eau_source": "SH.H2O.BASW.ZS"
     },
     "NER": {
       "electricite": 0.2,

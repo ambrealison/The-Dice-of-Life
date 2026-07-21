@@ -25,13 +25,14 @@
     },
     "USA": {
       "global_percentile": [
-        55,
-        72,
-        84,
-        92,
-        98
+        81,
+        90,
+        96,
+        98,
+        100
       ],
-      "coverage": "national"
+      "coverage": "national",
+      "survey_year": 2024
     },
     "BRA": {
       "global_percentile": [
@@ -45,23 +46,25 @@
     },
     "IND": {
       "global_percentile": [
-        18,
-        30,
-        42,
-        55,
-        72
+        12,
+        22,
+        32,
+        41,
+        60
       ],
-      "coverage": "national"
+      "coverage": "national",
+      "survey_year": 2022
     },
     "CHN": {
       "global_percentile": [
-        30,
-        45,
-        58,
-        72,
+        37,
+        56,
+        65,
+        76,
         88
       ],
-      "coverage": "national"
+      "coverage": "national",
+      "survey_year": 2022
     },
     "NER": {
       "global_percentile": [

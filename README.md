@@ -60,6 +60,33 @@ node validate.js
 
 Vérifie que chaque distribution somme à 1, que tous les pays du domaine sont présents dans chaque table, qu'aucun bucket inconnu n'est utilisé, et que les valeurs sont dans les bornes. Sort en erreur sinon.
 
+## Collecter les données réelles (`collect.py`)
+
+`collect.py` remplit `data/` avec des données réelles et **auditables**, source
+par source, en respectant `schema.json`. Chaque brut est mis en cache dans
+`data/raw/` avec son URL de requête à côté ; chaque valeur porte son `source_id`,
+`year` et `coverage` réels. Aucune valeur n'est inventée.
+
+```
+SSL_CERT_FILE=/root/.ccr/ca-bundle.crt python3 collect.py   # lot par lot
+node validate.js
+```
+
+- **Lot 1 (preuve de bout en bout)** : Inde, Chine, États-Unis. Niveaux 1, 2, 3,
+  4, 5, 8 en données nationales réelles (World Bank WDI — qui redistribue WPP,
+  WUP, UIS/Barro-Lee, JMP — et PIP pour le revenu). Niveaux 6 (santé/GBD) et 7
+  (famille/marriage) : méthode figée et documentée, repli marqué (sources
+  primaires gated/bloquées, voir ci-dessous).
+- **Reproductible** : `collect.py` relit le cache `data/raw/` par défaut
+  (`REFRESH=1` force un nouveau téléchargement). Le test d'atteignabilité des
+  sources est consigné dans `data/raw/_reachability_2026-07-21.md`.
+- **Méthodes figées** : `METHODS_health.md` (YLD GBD → 4 bandes de sévérité),
+  `METHODS_education.md` (base + facteurs), `METHODS_engine.md` (deux
+  généralisations de résolveur autorisées), couverture dans `COVERAGE_REPORT.md`.
+- **Revenu** : `data/income_world_ref.json` est la distribution mondiale de
+  référence (déciles PIP de 40 pays pondérés par population) qui convertit un
+  quintile national en percentile mondial.
+
 ## Ajouter des pays
 
 Deux façons. Soit étendre `build_seed.py` avec les paramètres bruts d'un pays et relancer `python3 build_seed.py`. Soit écrire directement les lignes dans les 8 fichiers `data/*.json` en respectant `schema.json`. Dans les deux cas, relancer `node validate.js`.

@@ -21,9 +21,9 @@
     },
     "USA": {
       "shares": {
-        "grande": 0.45,
-        "ville": 0.38,
-        "rural": 0.17
+        "grande": 0.46861194906008596,
+        "ville": 0.3326358489870981,
+        "rural": 0.19875220195281595
       },
       "coverage": "national"
     },
@@ -37,17 +37,17 @@
     },
     "IND": {
       "shares": {
-        "grande": 0.15,
-        "ville": 0.21,
-        "rural": 0.64
+        "grande": 0.16711134049073798,
+        "ville": 0.18667763187765105,
+        "rural": 0.646211027631611
       },
       "coverage": "national"
     },
     "CHN": {
       "shares": {
-        "grande": 0.35,
-        "ville": 0.29,
-        "rural": 0.36
+        "grande": 0.320103496513423,
+        "ville": 0.3388434844849019,
+        "rural": 0.34105301900167506
       },
       "coverage": "national"
     },

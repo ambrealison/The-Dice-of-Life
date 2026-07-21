@@ -23,12 +23,13 @@
     },
     "USA": {
       "shares": {
-        "aucune": 0.02,
-        "primaire": 0.06,
-        "secondaire": 0.45,
-        "superieur": 0.47
+        "aucune": 0.009052276611328014,
+        "primaire": 0.07479171752929703,
+        "secondaire": 0.5255620956420899,
+        "superieur": 0.390593910217285
       },
-      "coverage": "national"
+      "coverage": "national",
+      "year": 2024
     },
     "BRA": {
       "shares": {
@@ -41,21 +42,23 @@
     },
     "IND": {
       "shares": {
-        "aucune": 0.22,
-        "primaire": 0.24,
-        "secondaire": 0.36,
-        "superieur": 0.18
+        "aucune": 0.318672790527344,
+        "primaire": 0.267947196960449,
+        "secondaire": 0.26458701133728,
+        "superieur": 0.148793001174927
       },
-      "coverage": "national"
+      "coverage": "national",
+      "year": 2023
     },
     "CHN": {
       "shares": {
-        "aucune": 0.08,
-        "primaire": 0.22,
-        "secondaire": 0.48,
-        "superieur": 0.22
+        "aucune": 0.04159919738769502,
+        "primaire": 0.640702896118164,
+        "secondaire": 0.24092280864715615,
+        "superieur": 0.0767750978469849
       },
-      "coverage": "national"
+      "coverage": "national",
+      "year": 2020
     },
     "NER": {
       "shares": {
@@ -75,13 +78,19 @@
       "in_school": 0.99
     },
     "USA": {
-      "in_school": 0.99
+      "in_school": 0.9602,
+      "coverage": "national",
+      "year": 2022,
+      "source": "SE.PRM.UNER.ZS"
     },
     "BRA": {
       "in_school": 0.96
     },
     "IND": {
-      "in_school": 0.9
+      "in_school": 0.999,
+      "coverage": "national",
+      "year": 2024,
+      "source": "SE.PRM.UNER.ZS"
     },
     "CHN": {
       "in_school": 0.98

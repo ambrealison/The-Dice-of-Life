@@ -29,9 +29,10 @@
       "name_en": "United States",
       "region": "Amerique du Nord",
       "income_group": "high",
-      "population": 345000000,
+      "population": 340003797,
       "prep": "aux",
-      "coverage": "national"
+      "coverage": "national",
+      "year": 2024
     },
     {
       "iso3": "BRA",
@@ -49,9 +50,10 @@
       "name_en": "India",
       "region": "Asie du Sud",
       "income_group": "lower_middle",
-      "population": 1450000000,
+      "population": 1450935791,
       "prep": "en",
-      "coverage": "national"
+      "coverage": "national",
+      "year": 2024
     },
     {
       "iso3": "CHN",
@@ -59,9 +61,10 @@
       "name_en": "China",
       "region": "Asie de l'Est",
       "income_group": "upper_middle",
-      "population": 1410000000,
+      "population": 1408975000,
       "prep": "en",
-      "coverage": "national"
+      "coverage": "national",
+      "year": 2024
     },
     {
       "iso3": "NER",
