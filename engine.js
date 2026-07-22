@@ -57,6 +57,21 @@ const I18N = {
     modal_source_prefix: "source · ",
     data_error: "Données introuvables. Sers le dossier avec un serveur, ou ouvre le fichier autonome.",
     lang_name: "Français",
+    /* intro : explication cliquable */
+    concept_lead: "c'est quoi, au juste ? clique pour comprendre &darr;",
+    concept_hint: "trois cartes, trois idées. clique-en une.",
+    cc0_t: "8 milliards de vies",
+    cc1_t: "le hasard décide",
+    cc2_t: "de vraies données",
+    concept_reveal: [
+      "Chaque personne vivante est une face du dé. La tienne : un tirage parmi 8 milliards. Rien de mérité, rien de choisi.",
+      "Pays, âge, argent, santé, famille… le dé tire chaque étape. Comme à la naissance, personne ne choisit sa case de départ.",
+      "Chaque probabilité vient de vraies statistiques (ONU, Banque mondiale, OMS). Pendant le jeu, clique « voir les probas » pour les voir."
+    ],
+    /* conclusion : après le tirage */
+    concl_1: "Tu n'as pas choisi ta vie.",
+    concl_2: "Personne ne choisit sa case. La tienne était une chance parmi 8 milliards — et le même dé venait d'en tirer une autre, tout aussi réelle.",
+    concl_scrawl: "la prochaine fois que tu râles… repense au dé.",
     /* libellés d'étape */
     steps: {pays:"le pays", agesexe:"l'âge & le sexe", milieu:"le décor", revenu:"le portefeuille",
       education:"les études", sante:"la santé", famille:"la tribu", detail:"le bonus"},
@@ -138,6 +153,19 @@ const I18N = {
     modal_source_prefix: "source · ",
     data_error: "Data not found. Serve the folder with a server, or open the standalone file.",
     lang_name: "English",
+    concept_lead: "what is this, really? tap to find out &darr;",
+    concept_hint: "three cards, three ideas. tap one.",
+    cc0_t: "8 billion lives",
+    cc1_t: "chance decides",
+    cc2_t: "real data",
+    concept_reveal: [
+      "Every living person is a face of the die. Yours was one draw among 8 billion — nothing earned, nothing chosen.",
+      "Country, age, money, health, family… the die rolls each step. Like at birth, nobody picks their starting square.",
+      "Every probability comes from real statistics (UN, World Bank, WHO). During the game, tap “see the odds” to view them."
+    ],
+    concl_1: "You didn't choose your life.",
+    concl_2: "Nobody picks their square. Yours was one chance in 8 billion — and the same die had just rolled another, just as real.",
+    concl_scrawl: "next time you complain… remember the die.",
     steps: {pays:"the country", agesexe:"age & sex", milieu:"the setting", revenu:"the wallet",
       education:"schooling", sante:"health", famille:"the family", detail:"the bonus"},
     cat: {pays:"country", agesexe:"age", milieu:"setting", revenu:"money",
@@ -320,7 +348,7 @@ const STRATA=[
 ];
 
 /* ================= état & flux (clic par étape) ================= */
-let state,remaining,soul=0,i=0,curDist=null,curOutcome=null,rolled=false,distLog={};
+let state,remaining,soul=0,i=0,curDist=null,curOutcome=null,rolled=false,distLog={},conceptSel=null;
 function resetState(){state={};remaining=WORLD_POP;i=0;distLog={};$("#chips").innerHTML="";$("#countN").textContent=fmt(WORLD_POP);}
 
 function startPlay(){
@@ -380,6 +408,7 @@ function toFinal(){
     const el=document.createElement("div");el.className="chip";el.textContent=val;el.dataset.strata=id;
     el.onclick=()=>openDist(id,null);fc.appendChild(el);});
   $("#answerRow").style.display="flex";$("#after").style.opacity="0";$("#after").textContent="";$("#replayRow").classList.remove("show");
+  $("#conclusion").classList.remove("show");
   if(!REDUCED)confetti();
 }
 /* portrait final : gabarit de phrase distinct par langue */
@@ -397,7 +426,14 @@ function cap(s){return s?s[0].toUpperCase()+s.slice(1):s;}
 function answer(swap){$("#answerRow").style.display="none";
   $("#after").dataset.swap=swap?"1":"0";
   $("#after").textContent=swap?T().ans_yes_reply:T().ans_no_reply;$("#after").style.opacity="1";
-  setTimeout(()=>$("#replayRow").classList.add("show"),600);}
+  setTimeout(()=>$("#conclusion").classList.add("show"),450);
+  setTimeout(()=>$("#replayRow").classList.add("show"),1050);}
+
+/* intro : révèle l'explication de la carte cliquée (dans la langue courante) */
+function showConcept(idx){conceptSel=idx;
+  document.querySelectorAll(".concept-card").forEach(c=>c.classList.toggle("on",+c.dataset.concept===idx));
+  const el=$("#conceptReveal");if(!el)return;el.style.opacity="0";
+  setTimeout(()=>{el.innerHTML=T().concept_reveal[idx];el.style.opacity="1";},120);}
 
 /* valeur de chip courante pour une strate (recalcule dans la langue active) */
 function chipValue(id){const e=distLog[id];if(!e||e.picked===undefined)return null;
@@ -445,6 +481,9 @@ function refreshDynamic(){
     if(rolled&&curOutcome){const r=s.reveal(curOutcome,state);
       $("#result").textContent=r.word;const cp=$("#caption");cp.textContent=r.cap||"";}
   }
+  /* explication d'intro (carte sélectionnée ou invite) */
+  const cr=$("#conceptReveal");
+  if(cr)cr.innerHTML=conceptSel!=null?T().concept_reveal[conceptSel]:T().concept_hint;
   /* chips de la barre de jeu */
   document.querySelectorAll("#chips .chip").forEach(c=>{const v=chipValue(c.dataset.strata);if(v)c.textContent=v;});
   /* portrait final si visible */
@@ -493,6 +532,7 @@ function wire(){
   $("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal();});
   addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
   $("#s-play").addEventListener("click",e=>{if(e.target.closest("#die"))rollDie();});
+  document.querySelectorAll(".concept-card").forEach(c=>c.addEventListener("click",()=>showConcept(+c.dataset.concept)));
   document.querySelectorAll(".lang-btn").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
 }
 
@@ -501,6 +541,7 @@ function wire(){
     LANG=detectLang();
     DATA=await loadData(); buildIndexes(); wire();
     applyStaticI18n();
+    const cr=$("#conceptReveal");if(cr)cr.innerHTML=T().concept_hint;
   }
   catch(e){ document.body.innerHTML='<div style="font-family:sans-serif;padding:40px;color:#fff">'+T().data_error+'</div>'; console.error(e); }
 })();

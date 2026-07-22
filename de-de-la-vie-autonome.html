@@ -178,6 +178,35 @@
   .lang-btn.on{background:var(--ink);color:var(--cream)}
   @media (max-width:560px){ .lang-switch{bottom:auto;top:clamp(12px,2.6vw,20px);right:50%;transform:translateX(50%)} }
 
+  /* ---------- INTRO : EXPLICATION CLIQUABLE ---------- */
+  #s-intro{overflow-y:auto}
+  #s-final{overflow-y:auto}
+  @media (max-height:820px){ #s-intro,#s-final{justify-content:flex-start} }
+  .concept-lead{font-family:var(--hand);font-size:clamp(15px,2.4vw,20px);color:var(--cream);transform:rotate(-2deg);margin:16px 0 8px;z-index:1}
+  .concept{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;max-width:470px;z-index:1}
+  .concept-card{background:var(--paper);border:3px solid var(--ink);border-radius:15px;box-shadow:var(--shadow-sm);
+    padding:9px 12px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;width:106px;
+    transition:transform .12s ease,box-shadow .12s ease,background .15s}
+  .concept-card:nth-child(even){transform:rotate(1.5deg)}
+  .concept-card:hover{transform:translate(-2px,-2px) rotate(0);box-shadow:6px 6px 0 var(--ink);background:#fff}
+  .concept-card.on{background:var(--c-revenu);transform:translate(-1px,-1px) rotate(0)}
+  .cc-svg{width:32px;height:32px;display:block}
+  .cc-svg path,.cc-svg circle,.cc-svg ellipse,.cc-svg rect{stroke:var(--ink);stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .cc-svg .f{fill:var(--ink);stroke:none}
+  .cc-t{font-family:var(--disp);font-weight:800;font-size:12.5px;text-align:center;line-height:1.06;color:var(--ink)}
+  .concept-reveal{font-family:var(--hand);font-size:clamp(15px,2.5vw,19px);color:var(--cream);max-width:34ch;
+    text-align:center;min-height:3em;margin:11px 0 2px;z-index:1;line-height:1.28;transition:opacity .2s ease}
+
+  /* ---------- CONCLUSION (après le tirage) ---------- */
+  .conclusion{margin-top:16px;max-width:470px;width:100%;opacity:0;transform:translateY(10px);pointer-events:none;
+    transition:all .45s cubic-bezier(.2,1.4,.4,1);z-index:1}
+  .conclusion.show{opacity:1;transform:none;pointer-events:auto}
+  .conclusion-card{background:var(--paper);border:3px solid var(--ink);border-radius:22px;box-shadow:var(--shadow);
+    padding:clamp(16px,3vw,22px) clamp(18px,3.5vw,26px);text-align:center;transform:rotate(-1deg)}
+  .concl-1{font-family:var(--disp);font-weight:800;font-size:clamp(19px,3.4vw,26px);line-height:1.12;color:var(--ink)}
+  .concl-2{font-family:var(--body);font-weight:600;font-size:clamp(13px,2vw,15px);color:#5a566e;margin-top:10px;line-height:1.5}
+  .concl-scrawl{font-family:var(--hand);font-size:clamp(15px,2.5vw,20px);color:#e04a6b;margin-top:13px;transform:rotate(-1.5deg)}
+
   @keyframes wobble{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(2deg) translateY(-4px)}}
   @keyframes roll{0%{transform:rotate(0)}25%{transform:rotate(-14deg) scale(1.06)}50%{transform:rotate(16deg) scale(.96)}75%{transform:rotate(-8deg)}100%{transform:rotate(0)}}
   @keyframes pop{to{opacity:1;transform:scale(1)}}
@@ -195,7 +224,25 @@
     <div class="kicker" data-i18n="kicker">un jeu de hasard grandeur nature</div>
     <h1 class="logo" data-i18n="logo">Le Dé<br>de la Vie</h1>
     <div class="tagline" data-i18n="tagline">8 milliards de vies. Le dé en tire une au sort. Ça aurait pu être la tienne.</div>
-    <div class="earth-btn" id="earthBtn" aria-label="Lancer">
+
+    <div class="concept-lead" data-i18n="concept_lead">c'est quoi, au juste ? clique pour comprendre &darr;</div>
+    <div class="concept" id="concept">
+      <button class="concept-card" data-concept="0">
+        <svg class="cc-svg" viewBox="0 0 48 48"><circle cx="24" cy="24" r="17"/><ellipse cx="24" cy="24" rx="7" ry="17"/><path d="M8 20 H40"/><path d="M8 28 H40"/></svg>
+        <span class="cc-t" data-i18n="cc0_t">8 milliards de vies</span>
+      </button>
+      <button class="concept-card" data-concept="1">
+        <svg class="cc-svg" viewBox="0 0 48 48"><rect x="9" y="9" width="30" height="30" rx="7"/><circle cx="18" cy="18" r="2.6" class="f"/><circle cx="24" cy="24" r="2.6" class="f"/><circle cx="30" cy="30" r="2.6" class="f"/></svg>
+        <span class="cc-t" data-i18n="cc1_t">le hasard décide</span>
+      </button>
+      <button class="concept-card" data-concept="2">
+        <svg class="cc-svg" viewBox="0 0 48 48"><path d="M11 38 H39"/><rect x="13" y="24" width="6" height="12"/><rect x="23" y="17" width="6" height="19"/><rect x="33" y="11" width="6" height="25"/></svg>
+        <span class="cc-t" data-i18n="cc2_t">de vraies données</span>
+      </button>
+    </div>
+    <div class="concept-reveal" id="conceptReveal"></div>
+
+    <div class="earth-btn" id="earthBtn" aria-label="Lancer" style="margin-top:8px">
       <svg viewBox="0 0 120 120"><g>
         <circle cx="60" cy="60" r="46" fill="#12B5A0" stroke="#17151F" stroke-width="5"/>
         <path d="M34 40 q10 6 6 16 q-6 8 4 14 q8 4 2 14" fill="#59C24A" stroke="#17151F" stroke-width="4"/>
@@ -251,6 +298,13 @@
         <button class="ans yes" id="ansYes" data-i18n="ans_yes">Carrément</button>
       </div>
       <div class="after" id="after"></div>
+      <div class="conclusion" id="conclusion">
+        <div class="conclusion-card">
+          <div class="concl-1" data-i18n="concl_1">Tu n'as pas choisi ta vie.</div>
+          <div class="concl-2" data-i18n="concl_2">Personne ne choisit sa case. La tienne était une chance parmi 8 milliards — et le même dé venait d'en tirer une autre, tout aussi réelle.</div>
+          <div class="concl-scrawl" data-i18n="concl_scrawl">la prochaine fois que tu râles… repense au dé.</div>
+        </div>
+      </div>
       <div class="replay" id="replayRow"><button class="big-btn" id="replayBtn" data-i18n="replay_btn">Relancer le dé</button></div>
     </div>
   </section>
@@ -336,6 +390,21 @@ const I18N = {
     modal_source_prefix: "source · ",
     data_error: "Données introuvables. Sers le dossier avec un serveur, ou ouvre le fichier autonome.",
     lang_name: "Français",
+    /* intro : explication cliquable */
+    concept_lead: "c'est quoi, au juste ? clique pour comprendre &darr;",
+    concept_hint: "trois cartes, trois idées. clique-en une.",
+    cc0_t: "8 milliards de vies",
+    cc1_t: "le hasard décide",
+    cc2_t: "de vraies données",
+    concept_reveal: [
+      "Chaque personne vivante est une face du dé. La tienne : un tirage parmi 8 milliards. Rien de mérité, rien de choisi.",
+      "Pays, âge, argent, santé, famille… le dé tire chaque étape. Comme à la naissance, personne ne choisit sa case de départ.",
+      "Chaque probabilité vient de vraies statistiques (ONU, Banque mondiale, OMS). Pendant le jeu, clique « voir les probas » pour les voir."
+    ],
+    /* conclusion : après le tirage */
+    concl_1: "Tu n'as pas choisi ta vie.",
+    concl_2: "Personne ne choisit sa case. La tienne était une chance parmi 8 milliards — et le même dé venait d'en tirer une autre, tout aussi réelle.",
+    concl_scrawl: "la prochaine fois que tu râles… repense au dé.",
     /* libellés d'étape */
     steps: {pays:"le pays", agesexe:"l'âge & le sexe", milieu:"le décor", revenu:"le portefeuille",
       education:"les études", sante:"la santé", famille:"la tribu", detail:"le bonus"},
@@ -417,6 +486,19 @@ const I18N = {
     modal_source_prefix: "source · ",
     data_error: "Data not found. Serve the folder with a server, or open the standalone file.",
     lang_name: "English",
+    concept_lead: "what is this, really? tap to find out &darr;",
+    concept_hint: "three cards, three ideas. tap one.",
+    cc0_t: "8 billion lives",
+    cc1_t: "chance decides",
+    cc2_t: "real data",
+    concept_reveal: [
+      "Every living person is a face of the die. Yours was one draw among 8 billion — nothing earned, nothing chosen.",
+      "Country, age, money, health, family… the die rolls each step. Like at birth, nobody picks their starting square.",
+      "Every probability comes from real statistics (UN, World Bank, WHO). During the game, tap “see the odds” to view them."
+    ],
+    concl_1: "You didn't choose your life.",
+    concl_2: "Nobody picks their square. Yours was one chance in 8 billion — and the same die had just rolled another, just as real.",
+    concl_scrawl: "next time you complain… remember the die.",
     steps: {pays:"the country", agesexe:"age & sex", milieu:"the setting", revenu:"the wallet",
       education:"schooling", sante:"health", famille:"the family", detail:"the bonus"},
     cat: {pays:"country", agesexe:"age", milieu:"setting", revenu:"money",
@@ -599,7 +681,7 @@ const STRATA=[
 ];
 
 /* ================= état & flux (clic par étape) ================= */
-let state,remaining,soul=0,i=0,curDist=null,curOutcome=null,rolled=false,distLog={};
+let state,remaining,soul=0,i=0,curDist=null,curOutcome=null,rolled=false,distLog={},conceptSel=null;
 function resetState(){state={};remaining=WORLD_POP;i=0;distLog={};$("#chips").innerHTML="";$("#countN").textContent=fmt(WORLD_POP);}
 
 function startPlay(){
@@ -659,6 +741,7 @@ function toFinal(){
     const el=document.createElement("div");el.className="chip";el.textContent=val;el.dataset.strata=id;
     el.onclick=()=>openDist(id,null);fc.appendChild(el);});
   $("#answerRow").style.display="flex";$("#after").style.opacity="0";$("#after").textContent="";$("#replayRow").classList.remove("show");
+  $("#conclusion").classList.remove("show");
   if(!REDUCED)confetti();
 }
 /* portrait final : gabarit de phrase distinct par langue */
@@ -676,7 +759,14 @@ function cap(s){return s?s[0].toUpperCase()+s.slice(1):s;}
 function answer(swap){$("#answerRow").style.display="none";
   $("#after").dataset.swap=swap?"1":"0";
   $("#after").textContent=swap?T().ans_yes_reply:T().ans_no_reply;$("#after").style.opacity="1";
-  setTimeout(()=>$("#replayRow").classList.add("show"),600);}
+  setTimeout(()=>$("#conclusion").classList.add("show"),450);
+  setTimeout(()=>$("#replayRow").classList.add("show"),1050);}
+
+/* intro : révèle l'explication de la carte cliquée (dans la langue courante) */
+function showConcept(idx){conceptSel=idx;
+  document.querySelectorAll(".concept-card").forEach(c=>c.classList.toggle("on",+c.dataset.concept===idx));
+  const el=$("#conceptReveal");if(!el)return;el.style.opacity="0";
+  setTimeout(()=>{el.innerHTML=T().concept_reveal[idx];el.style.opacity="1";},120);}
 
 /* valeur de chip courante pour une strate (recalcule dans la langue active) */
 function chipValue(id){const e=distLog[id];if(!e||e.picked===undefined)return null;
@@ -724,6 +814,9 @@ function refreshDynamic(){
     if(rolled&&curOutcome){const r=s.reveal(curOutcome,state);
       $("#result").textContent=r.word;const cp=$("#caption");cp.textContent=r.cap||"";}
   }
+  /* explication d'intro (carte sélectionnée ou invite) */
+  const cr=$("#conceptReveal");
+  if(cr)cr.innerHTML=conceptSel!=null?T().concept_reveal[conceptSel]:T().concept_hint;
   /* chips de la barre de jeu */
   document.querySelectorAll("#chips .chip").forEach(c=>{const v=chipValue(c.dataset.strata);if(v)c.textContent=v;});
   /* portrait final si visible */
@@ -772,6 +865,7 @@ function wire(){
   $("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal();});
   addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
   $("#s-play").addEventListener("click",e=>{if(e.target.closest("#die"))rollDie();});
+  document.querySelectorAll(".concept-card").forEach(c=>c.addEventListener("click",()=>showConcept(+c.dataset.concept)));
   document.querySelectorAll(".lang-btn").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
 }
 
@@ -780,6 +874,7 @@ function wire(){
     LANG=detectLang();
     DATA=await loadData(); buildIndexes(); wire();
     applyStaticI18n();
+    const cr=$("#conceptReveal");if(cr)cr.innerHTML=T().concept_hint;
   }
   catch(e){ document.body.innerHTML='<div style="font-family:sans-serif;padding:40px;color:#fff">'+T().data_error+'</div>'; console.error(e); }
 })();
